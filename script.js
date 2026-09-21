@@ -38,3 +38,31 @@ document.querySelectorAll('[data-icon]').forEach((el) => {
     el.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${svg}</svg>`;
   }
 });
+
+// Botões "Assinar agora" dos planos — tenta abrir o checkout do Mercado
+// Pago (via /api/mercadopago/create-preference) e, se ainda não estiver
+// configurado (ou der erro), cai pro link de WhatsApp que já está no
+// próprio botão (href), sem quebrar nada.
+document.querySelectorAll('[data-checkout]').forEach((btn) => {
+  btn.addEventListener('click', async (event) => {
+    const plan = btn.getAttribute('data-checkout');
+    const fallbackHref = btn.getAttribute('href');
+    event.preventDefault();
+    try {
+      const response = await fetch('/api/mercadopago/create-preference', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ plan }),
+        signal: AbortSignal.timeout(8000),
+      });
+      const data = await response.json();
+      if (response.ok && data.url) {
+        window.location.href = data.url;
+        return;
+      }
+    } catch {
+      // segue pro fallback abaixo
+    }
+    window.open(fallbackHref, '_blank', 'noopener');
+  });
+});

@@ -46,7 +46,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--orange-deep); o
 .topbar { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,.92); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
 .nav { height: 78px; display: flex; align-items: center; justify-content: space-between; gap: 26px; }
 .brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; }
-.brand img { width: 42px; height: 42px; object-fit: contain; }
+.brand img { height: 46px; width: auto; object-fit: contain; }
 .brand span { font-weight: 800; font-size: 1.25rem; color: var(--ink); }
 .nav-links { display: flex; align-items: center; gap: 28px; list-style: none; }
 .nav-links a { color: var(--muted); text-decoration: none; font-size: .88rem; font-weight: 600; transition: .2s; }
@@ -143,8 +143,8 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--orange-deep); o
 .receipt-mock .rc-bold { font-weight: 800; }
 
 .plans-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: stretch; }
-.plan-card { border: 1.5px solid var(--line); border-radius: 24px; padding: 34px; background: var(--bg); display: flex; flex-direction: column; }
-.plan-card.featured { border-color: var(--orange); box-shadow: var(--shadow); position: relative; }
+.plan-card { border: 1.5px solid var(--line); border-radius: 24px; padding: 34px; background: var(--bg); display: flex; flex-direction: column; transition: border-color .2s, box-shadow .2s, transform .2s; }
+.plan-card:hover, .plan-card.featured { border-color: var(--orange); box-shadow: var(--shadow); transform: translateY(-4px); position: relative; }
 .plan-card .plan-tag { display: inline-flex; align-self: flex-start; padding: 5px 12px; border-radius: 999px; background: var(--peach); color: var(--orange-deep); font-size: .68rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; margin-bottom: 16px; }
 .plan-card h3 { font-weight: 800; font-size: 1.5rem; margin-bottom: 6px; }
 .plan-card .plan-desc { color: var(--muted); font-size: .88rem; margin-bottom: 20px; }
@@ -204,10 +204,13 @@ footer a:hover { color: var(--orange-light); }
 
 /* Integrações de pagamento com logo original de cada operadora — mostra que
    não cobramos taxa e que o pagamento online é opcional. */
-.payments-row { display: flex; align-items: center; justify-content: center; gap: 40px; flex-wrap: wrap; text-align: center; }
-.payments-logos { display: flex; align-items: center; gap: 32px; }
-.payments-logos img { height: 34px; width: auto; object-fit: contain; }
-.payments-row p { max-width: 460px; color: var(--muted); font-size: .9rem; margin: 0; text-align: left; }
+.payment-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; max-width: 760px; margin: 0 auto 28px; }
+.payment-card { border: 1px solid var(--line); border-radius: 20px; padding: 36px 28px; text-align: center; background: var(--bg); transition: box-shadow .2s, border-color .2s, transform .2s; }
+.payment-card:hover { box-shadow: var(--shadow); border-color: transparent; transform: translateY(-3px); }
+.payment-card img { height: 40px; width: auto; object-fit: contain; margin: 0 auto 20px; }
+.payment-card h3 { font-weight: 700; font-size: 1.2rem; margin-bottom: 8px; }
+.payment-card p { color: var(--muted); font-size: .9rem; }
+.payments-note { text-align: center; color: var(--muted); font-size: .88rem; max-width: 640px; margin-inline: auto; }
 
 /* Selo de conformidade LGPD — card único, minimalista. */
 .lgpd-card { display: flex; align-items: flex-start; gap: 20px; border: 1px solid var(--line); border-radius: var(--radius); padding: 28px 32px; background: var(--bg-soft); max-width: 780px; margin-inline: auto; }
@@ -241,8 +244,7 @@ footer a:hover { color: var(--orange-light); }
   .contact-card { grid-template-columns: 1fr; }
   .footer-grid { grid-template-columns: 1fr; gap: 26px; }
   .faq-grid { grid-template-columns: 1fr; gap: 0; }
-  .payments-row { flex-direction: column; text-align: center; }
-  .payments-row p { text-align: center; }
+  .payment-cards { grid-template-columns: 1fr; }
   .lgpd-card { flex-direction: column; padding: 24px; }
 }
 
