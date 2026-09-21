@@ -30,6 +30,7 @@ const ICONS = {
   shield: '<path d="M12 3l7 3v6c0 5-3.5 8-7 9-3.5-1-7-4-7-9V6l7-3Z"/><polyline points="9 12 11 14 15 9.5"/>',
   check: '<circle cx="12" cy="12" r="9"/><polyline points="8 12.5 11 15.5 16 9"/>',
   route: '<circle cx="6" cy="6" r="2.3"/><circle cx="18" cy="18" r="2.3"/><path d="M6 8.3V13a4 4 0 0 0 4 4h4"/>',
+  phoneOff: '<path d="M10.68 13.31a16 16 0 0 0 3.41 2.6l1.27-1.27a2 2 0 0 1 2.11-.45c.84.32 1.72.55 2.63.65A2 2 0 0 1 22 16.92V19a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-6.53-1.75"/><path d="M9.09 9.09A16 16 0 0 1 6.5 4.63 2 2 0 0 1 8.5 2h2.09a2 2 0 0 1 2 1.72c.11.9.34 1.78.65 2.62"/><line x1="1" y1="1" x2="23" y2="23"/>',
 };
 document.querySelectorAll('[data-icon]').forEach((el) => {
   const svg = ICONS[el.getAttribute('data-icon')];
