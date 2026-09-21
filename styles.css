@@ -196,6 +196,43 @@ footer a:hover { color: var(--orange-light); }
 .wpp-float svg { width: 27px; height: 31px; fill: currentColor; }
 .wpp-float:hover { transform: scale(1.08); }
 
+/* Selo de confiança logo abaixo dos botões do hero (sem multa, implantação
+   grátis, pagamento opcional) — pedido explícito do dono. */
+.trust-strip { display: flex; flex-wrap: wrap; gap: 10px 22px; margin-top: 22px; }
+.trust-item { font-size: .8rem; font-weight: 600; color: var(--muted); }
+
+/* Integrações de pagamento com logo original de cada operadora — mostra que
+   não cobramos taxa e que o pagamento online é opcional. */
+.payments-row { display: flex; align-items: center; justify-content: center; gap: 40px; flex-wrap: wrap; text-align: center; }
+.payments-logos { display: flex; align-items: center; gap: 32px; }
+.payments-logos img { height: 34px; width: auto; object-fit: contain; }
+.payments-row p { max-width: 460px; color: var(--muted); font-size: .9rem; margin: 0; text-align: left; }
+
+/* Selo de conformidade LGPD — card único, minimalista. */
+.lgpd-card { display: flex; align-items: flex-start; gap: 20px; border: 1px solid var(--line); border-radius: var(--radius); padding: 28px 32px; background: var(--bg-soft); max-width: 780px; margin-inline: auto; }
+.lgpd-icon { font-size: 1.8rem; flex-shrink: 0; }
+.lgpd-card h3 { font-weight: 700; font-size: 1.1rem; margin-bottom: 6px; }
+.lgpd-card p { color: var(--muted); font-size: .9rem; line-height: 1.6; }
+.lgpd-card a { color: var(--orange-deep); font-weight: 700; text-decoration: underline; }
+
+/* FAQ em duas colunas (4 perguntas de cada lado). */
+.faq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 48px; }
+.faq-col { display: grid; }
+.faq-item { border-bottom: 1px solid var(--line); }
+.faq-item summary { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 20px 0; cursor: pointer; list-style: none; font-weight: 700; font-size: .96rem; }
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item summary::after { content: "+"; color: var(--muted); font-size: 1.3rem; font-weight: 300; flex-shrink: 0; }
+.faq-item[open] summary::after { content: "−"; }
+.faq-answer { padding: 0 0 20px; color: var(--muted); font-size: .88rem; line-height: 1.6; }
+
+/* Lista minimalista de funcionalidades (página /funcionalidades) — sem
+   cards quadrados, só tipografia e um traço fino separando cada item. */
+.feature-list { border-top: 1px solid var(--line); }
+.feature-row { display: grid; grid-template-columns: 52px 1fr; gap: 22px; padding: 30px 0; border-bottom: 1px solid var(--line); align-items: start; }
+.feature-row .fr-icon { font-size: 1.6rem; line-height: 1; }
+.feature-row h3 { font-weight: 700; font-size: 1.05rem; margin-bottom: 6px; }
+.feature-row p { color: var(--muted); font-size: .92rem; line-height: 1.65; max-width: 640px; }
+
 @media (max-width: 900px) {
   .nav-links {
     position: fixed; inset: 0; z-index: 200; flex-direction: column; justify-content: center;
@@ -211,6 +248,10 @@ footer a:hover { color: var(--orange-light); }
   .diff-grid { grid-template-columns: 1fr; }
   .contact-card { grid-template-columns: 1fr; }
   .footer-grid { grid-template-columns: 1fr; gap: 26px; }
+  .faq-grid { grid-template-columns: 1fr; gap: 0; }
+  .payments-row { flex-direction: column; text-align: center; }
+  .payments-row p { text-align: center; }
+  .lgpd-card { flex-direction: column; padding: 24px; }
 }
 
 @media (max-width: 640px) {

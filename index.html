@@ -38,10 +38,10 @@
       <button class="menu-btn" id="menuBtn" type="button" aria-label="Abrir menu" aria-expanded="false">☰</button>
       <ul class="nav-links" id="navLinks">
         <li><a href="/" class="active">Início</a></li>
-        <li><a href="/diferenciais/">Diferenciais</a></li>
+        <li><a href="/funcionalidades/">Funcionalidades</a></li>
         <li><a href="/planos/">Planos</a></li>
         <li><a href="/contato/">Contato</a></li>
-        <li><a class="nav-cta" href="https://wa.me/5521970656726?text=Ol%C3%A1%2C%20quero%20conhecer%20o%20SimSim%20para%20o%20meu%20neg%C3%B3cio." target="_blank" rel="noopener">Falar no WhatsApp</a></li>
+        <li><a class="nav-cta" href="/planos/">Ver planos</a></li>
       </ul>
     </nav>
   </header>
@@ -53,8 +53,13 @@
         <h1>O sistema que cuida do seu <span class="highlight">delivery</span> do pedido à entrega.</h1>
         <p class="hero-copy">Cardápio digital, pedidos, pagamentos, entregas e atendimento com IA, tudo em uma única plataforma. Menos trabalho manual, mais venda, mais controle.</p>
         <div class="hero-actions">
-          <a class="btn btn-whatsapp" href="https://wa.me/5521970656726?text=Ol%C3%A1%2C%20quero%20conhecer%20o%20SimSim%20para%20o%20meu%20neg%C3%B3cio." target="_blank" rel="noopener">Falar com um consultor</a>
-          <a class="btn btn-secondary" href="/planos/">Ver planos <span aria-hidden="true">→</span></a>
+          <a class="btn btn-primary" href="/planos/">Assinar agora <span aria-hidden="true">→</span></a>
+          <a class="btn btn-secondary" href="https://wa.me/5521970656726?text=Ol%C3%A1%2C%20quero%20conhecer%20o%20SimSim%20para%20o%20meu%20neg%C3%B3cio." target="_blank" rel="noopener">Falar com um consultor</a>
+        </div>
+        <div class="trust-strip">
+          <span class="trust-item">✓ Sem multa de cancelamento</span>
+          <span class="trust-item">✓ Implantamos seu cardápio sem custo</span>
+          <span class="trust-item">✓ Pagamento online opcional, sem taxa do SimSim</span>
         </div>
       </div>
     </section>
@@ -135,7 +140,7 @@
           <div class="diff-strip-item"><span class="glyph">📍</span><span>Rastreamento em tempo real</span></div>
           <div class="diff-strip-item"><span class="glyph">🤖</span><span>IA integrada</span></div>
         </div>
-        <p style="margin-top:26px"><a class="btn btn-secondary" href="/diferenciais/">Ver todos os diferenciais <span aria-hidden="true">→</span></a></p>
+        <p style="margin-top:26px"><a class="btn btn-secondary" href="/funcionalidades/">Ver todas as funcionalidades <span aria-hidden="true">→</span></a></p>
       </div>
     </section>
 
@@ -165,6 +170,18 @@
             <div class="rc-row rc-bold"><span>Total</span><span>R$ 65,00</span></div>
             <div class="rc-row rc-bold"><span>Cartão online</span><span>Pago</span></div>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-sm" id="pagamentos">
+      <div class="container">
+        <div class="payments-row">
+          <div class="payments-logos">
+            <img src="img/payment-logos/infinitepay.png" alt="InfinitePay">
+            <img src="img/payment-logos/mercadopago.svg" alt="Mercado Pago">
+          </div>
+          <p>Não cobramos nenhuma taxa por isso. O pagamento online é opcional, e o valor cai direto na conta da sua loja, só a taxa é da própria operadora.</p>
         </div>
       </div>
     </section>
@@ -236,26 +253,75 @@
             <span class="plan-tag">Bot</span>
             <h3>SimSim Bot</h3>
             <p class="plan-desc">Respostas automáticas e organização de pedidos no WhatsApp, sem inteligência artificial.</p>
-            <div class="plan-price"><span class="amount">Em breve</span></div>
-            <p class="plan-price-note">Valor definido na contratação</p>
-            <a class="btn btn-secondary" href="/planos/">Ver detalhes</a>
+            <div class="plan-price"><span class="amount">R$ 200</span><span class="cycle">/mês</span></div>
+            <p class="plan-price-note">Sem multa de cancelamento</p>
+            <a class="btn btn-primary" href="/planos/">Assinar agora</a>
           </div>
           <div class="plan-card featured">
-            <span class="plan-tag">IA</span>
+            <span class="plan-tag">Mais completo</span>
             <h3>SimSim IA</h3>
             <p class="plan-desc">Tudo do plano Bot, com atendimento inteligente que conversa, sugere e fecha pedido sozinho.</p>
-            <div class="plan-price"><span class="amount">Em breve</span></div>
-            <p class="plan-price-note">Valor definido na contratação</p>
-            <a class="btn btn-primary" href="/planos/">Ver detalhes</a>
+            <div class="plan-price"><span class="amount">R$ 350</span><span class="cycle">/mês</span></div>
+            <p class="plan-price-note">Sem multa de cancelamento</p>
+            <a class="btn btn-primary" href="/planos/">Assinar agora</a>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="section" id="cta-final">
-      <div class="container" style="text-align:center">
-        <div class="section-head center"><h2>Pronto para colocar seu <span class="highlight">delivery no próximo nível?</span></h2><p>Fale com a gente e veja como o SimSim se encaixa no seu negócio.</p></div>
-        <a class="btn btn-whatsapp" href="https://wa.me/5521970656726?text=Ol%C3%A1%2C%20quero%20conhecer%20o%20SimSim%20para%20o%20meu%20neg%C3%B3cio." target="_blank" rel="noopener">Falar no WhatsApp</a>
+    <section class="section-sm" id="lgpd">
+      <div class="container">
+        <div class="lgpd-card">
+          <span class="lgpd-icon">🛡️</span>
+          <div>
+            <h3>Em conformidade com a LGPD</h3>
+            <p>Seguimos a Lei Geral de Proteção de Dados em toda a operação: os dados de clientes, equipe e entregadores ficam protegidos, com acesso restrito por loja e credenciais sensíveis nunca expostas. <a href="/legal/politica-de-privacidade.html">Veja a Política de Privacidade</a>.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="faq">
+      <div class="container">
+        <div class="section-head center"><span class="eyebrow">Dúvidas frequentes</span><h2>Perguntas que a gente <span class="highlight">mais recebe.</span></h2></div>
+        <div class="faq-grid">
+          <div class="faq-col">
+            <details class="faq-item">
+              <summary>Tem multa se eu cancelar?</summary>
+              <div class="faq-answer">Não. Você pode cancelar quando quiser, sem multa de cancelamento.</div>
+            </details>
+            <details class="faq-item">
+              <summary>Vocês montam meu cardápio pra mim?</summary>
+              <div class="faq-answer">Sim, a implantação do seu cardápio é feita pela nossa equipe sem custo, na contratação de qualquer plano.</div>
+            </details>
+            <details class="faq-item">
+              <summary>O sistema funciona no celular e no computador?</summary>
+              <div class="faq-answer">Sim. O cardápio e o checkout são otimizados pra celular, e o painel de gestão de pedidos roda direto no navegador do computador.</div>
+            </details>
+            <details class="faq-item">
+              <summary>O sistema imprime o cupom do pedido?</summary>
+              <div class="faq-answer">Sim, imprime a notinha (cupom não fiscal) automaticamente numa impressora térmica, com os itens, sabores, pagamento e dados de entrega.</div>
+            </details>
+          </div>
+          <div class="faq-col">
+            <details class="faq-item">
+              <summary>O pagamento online é obrigatório?</summary>
+              <div class="faq-answer">Não, é opcional. Você pode continuar recebendo em dinheiro, Pix ou cartão na entrega normalmente, e ativar o pagamento online só se quiser.</div>
+            </details>
+            <details class="faq-item">
+              <summary>O SimSim cobra alguma taxa em cima dos pagamentos?</summary>
+              <div class="faq-answer">Não. A única taxa que existe é a da própria operadora de pagamento (InfinitePay ou Mercado Pago). O SimSim não cobra nada em cima disso.</div>
+            </details>
+            <details class="faq-item">
+              <summary>Os dados dos meus clientes estão seguros?</summary>
+              <div class="faq-answer">Sim. Seguimos a LGPD, com acesso segregado por loja e credenciais sensíveis guardadas em área restrita, nunca expostas.</div>
+            </details>
+            <details class="faq-item">
+              <summary>Qual a diferença entre o plano Bot e o plano IA?</summary>
+              <div class="faq-answer">O Bot responde por menu automático e organiza o pedido. O IA vai além: entende linguagem natural, anota o pedido conversando normalmente, responde áudio e tira dúvidas sozinho.</div>
+            </details>
+          </div>
+        </div>
       </div>
     </section>
   </main>
@@ -263,7 +329,7 @@
   <footer><div class="container">
     <div class="footer-grid">
       <div class="footer-brand"><a class="brand" href="/"><img src="img/logo-simsim.png" alt="SimSim" style="width:44px;height:44px"></a><p>Sistema completo de pedidos e delivery, desenvolvido pela Aiex.</p></div>
-      <div><h3>Site</h3><ul><li><a href="/">Início</a></li><li><a href="/diferenciais/">Diferenciais</a></li><li><a href="/planos/">Planos</a></li><li><a href="/contato/">Contato</a></li></ul></div>
+      <div><h3>Site</h3><ul><li><a href="/">Início</a></li><li><a href="/funcionalidades/">Funcionalidades</a></li><li><a href="/planos/">Planos</a></li><li><a href="/contato/">Contato</a></li></ul></div>
       <div><h3>Contato</h3><ul><li><a href="https://wa.me/5521970656726" target="_blank" rel="noopener">WhatsApp</a></li><li><a href="https://aiexbrasil.com.br" target="_blank" rel="noopener">Aiex</a></li></ul></div><div><h3>Legal</h3><ul><li><a href="legal/politica-de-privacidade.html">Política de Privacidade</a></li><li><a href="legal/termos-de-uso.html">Termos de Uso</a></li></ul></div>
     </div>
     <p class="copyright">© <span id="year"></span> SimSim, um produto Aiex. Todos os direitos reservados.</p>

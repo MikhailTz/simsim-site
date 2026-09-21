@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#ffffff">
-  <meta name="description" content="Conheça os planos do SimSim, sistema completo de pedidos e delivery. Fale com a gente e receba uma proposta feita para o seu negócio.">
+  <meta name="description" content="Planos do SimSim: Bot por R$ 200/mês e IA por R$ 350/mês. Sem multa de cancelamento, implantação do cardápio sem custo.">
   <title>Planos | SimSim</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -19,10 +19,10 @@
       <button class="menu-btn" id="menuBtn" type="button" aria-label="Abrir menu" aria-expanded="false">☰</button>
       <ul class="nav-links" id="navLinks">
         <li><a href="/">Início</a></li>
-        <li><a href="/diferenciais/">Diferenciais</a></li>
+        <li><a href="/funcionalidades/">Funcionalidades</a></li>
         <li><a href="/planos/" class="active">Planos</a></li>
         <li><a href="/contato/">Contato</a></li>
-        <li><a class="nav-cta" href="https://wa.me/5521970656726?text=Ol%C3%A1%2C%20quero%20saber%20os%20planos%20do%20SimSim." target="_blank" rel="noopener">Falar no WhatsApp</a></li>
+        <li><a class="nav-cta" href="/planos/">Ver planos</a></li>
       </ul>
     </nav>
   </header>
@@ -43,38 +43,47 @@
             <span class="plan-tag">Bot</span>
             <h3>SimSim Bot</h3>
             <p class="plan-desc">Cardápio, pedidos e respostas automáticas por menu no WhatsApp, sem inteligência artificial.</p>
-            <div class="plan-price"><span class="amount">Em breve</span></div>
-            <p class="plan-price-note">Assinatura mensal, valor anunciado em breve</p>
+            <div class="plan-price"><span class="amount">R$ 200</span><span class="cycle">/mês</span></div>
+            <p class="plan-price-note">Sem multa de cancelamento</p>
             <ul class="plan-features">
               <li>Cardápio digital e checkout próprio</li>
-              <li>Gestão de pedidos e entregas</li>
-              <li>Respostas automáticas por menu (sem IA)</li>
+              <li>Implantação do cardápio sem custo</li>
+              <li>Gestão de pedidos e entregas (Gestor de Pedidos)</li>
+              <li>Respostas automáticas por menu no WhatsApp (sem IA)</li>
+              <li>Anota o pedido automaticamente a partir do menu</li>
               <li>Pagamento a prazo com cobrança automática</li>
               <li>Pagamento online opcional, sem taxa extra do SimSim</li>
               <li>Rastreamento de entrega em tempo real</li>
             </ul>
-            <!-- TODO: trocar por link de checkout (Mercado Pago/InfinitePay) quando o preço for definido -->
-            <a class="btn btn-secondary" data-checkout="bot" href="https://wa.me/5521970656726?text=Ol%C3%A1%2C%20quero%20assinar%20o%20plano%20SimSim%20Bot." target="_blank" rel="noopener">Quero esse plano</a>
+            <!-- TODO: trocar por link de checkout (Mercado Pago/InfinitePay) -->
+            <a class="btn btn-primary" data-checkout="bot" href="https://wa.me/5521970656726?text=Ol%C3%A1%2C%20quero%20assinar%20o%20plano%20SimSim%20Bot%20(R%24%20200%2Fm%C3%AAs)." target="_blank" rel="noopener">Assinar agora</a>
           </div>
           <div class="plan-card featured" data-plan="ia">
             <span class="plan-tag">Mais completo</span>
             <h3>SimSim IA</h3>
             <p class="plan-desc">Tudo do plano Bot, com atendimento por inteligência artificial que conversa, sugere e fecha o pedido sozinho.</p>
-            <div class="plan-price"><span class="amount">Em breve</span></div>
-            <p class="plan-price-note">Assinatura mensal, valor anunciado em breve</p>
+            <div class="plan-price"><span class="amount">R$ 350</span><span class="cycle">/mês</span></div>
+            <p class="plan-price-note">Sem multa de cancelamento</p>
             <ul class="plan-features">
               <li>Tudo do plano SimSim Bot</li>
-              <li>Atendimento com inteligência artificial no WhatsApp</li>
-              <li>Consulta o cardápio e monta o pedido sozinha</li>
-              <li>Responde dúvidas e reduz fila de atendimento</li>
+              <li>Atendimento por inteligência artificial no WhatsApp</li>
+              <li>Entende linguagem natural, não só menu fixo</li>
+              <li>Anota o pedido conversando normalmente com o cliente</li>
+              <li>Recebe e responde mensagens de áudio</li>
+              <li>Consulta o cardápio e tira dúvidas sozinha</li>
+              <li>Sugere produtos e ajuda a fechar a venda</li>
               <li>Encaminha para humano quando necessário</li>
               <li>Prioridade no suporte</li>
             </ul>
-            <!-- TODO: trocar por link de checkout (Mercado Pago/InfinitePay) quando o preço for definido -->
-            <a class="btn btn-primary" data-checkout="ia" href="https://wa.me/5521970656726?text=Ol%C3%A1%2C%20quero%20assinar%20o%20plano%20SimSim%20IA." target="_blank" rel="noopener">Quero esse plano</a>
+            <!-- TODO: trocar por link de checkout (Mercado Pago/InfinitePay) -->
+            <a class="btn btn-primary" data-checkout="ia" href="https://wa.me/5521970656726?text=Ol%C3%A1%2C%20quero%20assinar%20o%20plano%20SimSim%20IA%20(R%24%20350%2Fm%C3%AAs)." target="_blank" rel="noopener">Assinar agora</a>
           </div>
         </div>
-        <p style="text-align:center;color:var(--muted);font-size:.84rem;margin-top:22px">Preços ainda não divulgados. Fale com a gente pra saber a previsão de lançamento e garantir condição de early adopter.</p>
+        <div class="trust-strip" style="justify-content:center;margin-top:30px">
+          <span class="trust-item">✓ Sem multa de cancelamento</span>
+          <span class="trust-item">✓ Implantamos seu cardápio sem custo</span>
+          <span class="trust-item">✓ Pagamento online opcional, sem taxa do SimSim</span>
+        </div>
       </div>
     </section>
 
@@ -82,8 +91,7 @@
       <div class="container">
         <div class="plan-note">
           <h3>Precisa de algo sob medida?</h3>
-          <p>Rede com várias lojas ou operação fora da curva? Fale com a nossa equipe e montamos uma proposta específica.</p>
-          <a class="btn btn-whatsapp" href="https://wa.me/5521970656726?text=Ol%C3%A1%2C%20quero%20uma%20proposta%20sob%20medida%20do%20SimSim." target="_blank" rel="noopener">Falar com a equipe</a>
+          <p>Rede com várias lojas ou operação fora da curva? <a href="https://wa.me/5521970656726?text=Ol%C3%A1%2C%20quero%20uma%20proposta%20sob%20medida%20do%20SimSim." target="_blank" rel="noopener" style="color:var(--orange-deep);font-weight:700;text-decoration:underline">Fale com a nossa equipe</a> e montamos uma proposta específica.</p>
         </div>
       </div>
     </section>
@@ -92,7 +100,7 @@
   <footer><div class="container">
     <div class="footer-grid">
       <div class="footer-brand"><a class="brand" href="/"><img src="../img/logo-simsim.png" alt="SimSim" style="width:44px;height:44px"></a><p>Sistema completo de pedidos e delivery, desenvolvido pela Aiex.</p></div>
-      <div><h3>Site</h3><ul><li><a href="/">Início</a></li><li><a href="/diferenciais/">Diferenciais</a></li><li><a href="/planos/">Planos</a></li><li><a href="/contato/">Contato</a></li></ul></div>
+      <div><h3>Site</h3><ul><li><a href="/">Início</a></li><li><a href="/funcionalidades/">Funcionalidades</a></li><li><a href="/planos/">Planos</a></li><li><a href="/contato/">Contato</a></li></ul></div>
       <div><h3>Contato</h3><ul><li><a href="https://wa.me/5521970656726" target="_blank" rel="noopener">WhatsApp</a></li><li><a href="https://aiexbrasil.com.br" target="_blank" rel="noopener">Aiex</a></li></ul></div><div><h3>Legal</h3><ul><li><a href="../legal/politica-de-privacidade.html">Política de Privacidade</a></li><li><a href="../legal/termos-de-uso.html">Termos de Uso</a></li></ul></div>
     </div>
     <p class="copyright">© <span id="year"></span> SimSim, um produto Aiex. Todos os direitos reservados.</p>
