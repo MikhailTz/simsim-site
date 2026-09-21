@@ -75,7 +75,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--orange-deep); o
 
 /* Galeria com prints reais do sistema (não é mockup) — prova visual de
    que as funcionalidades existem de verdade. */
-.screens-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin-bottom: 60px; align-items: start; }
+.screens-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; align-items: start; }
 .shot { border-radius: 16px; overflow: hidden; border: 1px solid var(--line); box-shadow: 0 14px 34px rgba(28,23,18,.1); background: var(--bg); }
 .shot.wide { grid-column: span 2; }
 .shot img { width: 100%; height: auto; display: block; }
@@ -94,9 +94,12 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--orange-deep); o
 
 /* Showcase: celular + desktop + cupom sobre o hero colorido, prova visual
    de "funciona em qualquer tela e imprime notinha de verdade". */
-.device-row { display: grid; grid-template-columns: 1fr 1.15fr .85fr; gap: 30px; align-items: end; margin-top: 56px; }
+.device-row { display: grid; grid-template-columns: .85fr 1.4fr .75fr; gap: 30px; align-items: end; margin-top: 56px; }
 .device-col { display: flex; flex-direction: column; align-items: center; }
 .device-label { display: inline-flex; margin-top: 16px; padding: 8px 16px; border-radius: 999px; background: rgba(0,0,0,.32); color: #fff; font-size: .76rem; font-weight: 700; white-space: nowrap; }
+.shot-hero { max-width: 230px; }
+.shot-hero.shot-wide { max-width: 100%; }
+.shot-hero img { border-radius: 15px; }
 .device-laptop { position: relative; }
 .laptop-screen { border-radius: 14px 14px 0 0; border: 10px solid var(--ink); border-bottom: none; background: #f4efe9; overflow: hidden; aspect-ratio: 16/10.5; }
 .laptop-base { height: 16px; background: linear-gradient(var(--ink), #0f0c09); border-radius: 0 0 10px 10px; position: relative; }
@@ -158,8 +161,9 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--orange-deep); o
   .device-row { grid-template-columns: 1fr; justify-items: center; gap: 40px; }
   .device-phone { width: 200px; }
   .func-grid, .func-grid.cols-3 { grid-template-columns: repeat(2, 1fr); }
-  .screens-grid { grid-template-columns: 1fr; }
+  .screens-grid { grid-template-columns: repeat(2, 1fr); }
   .shot.wide { grid-column: span 1; }
+  .shot-hero.shot-wide { max-width: 320px; }
   .plans-grid { grid-template-columns: 1fr; }
 }
 
@@ -249,6 +253,7 @@ footer a:hover { color: var(--orange-light); }
   .hero { padding: 44px 0 36px; }
   .plan-note { padding: 26px 20px; }
   .func-grid, .func-grid.cols-3 { grid-template-columns: 1fr; }
+  .screens-grid { grid-template-columns: 1fr; }
 }
 
 .legal { max-width: 820px; }
