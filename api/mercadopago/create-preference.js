@@ -1,9 +1,14 @@
-// Cria uma preferência de pagamento (Checkout Pro) do Mercado Pago pra
-// assinatura de um dos planos do SimSim. O Access Token é configurado no
-// painel Aiex (admin.aiexbrasil.com.br > Integrações), não numa env var
-// aqui — só busca no mesmo Supabase que todos os produtos da Aiex já usam
-// (tabela platform_secrets, sem nenhuma política de RLS: só o service_role
-// lê). Se ainda não tiver sido configurado por lá, responde 503 e o botão
+// Cria um plano de assinatura recorrente (Mercado Pago Assinaturas —
+// endpoint /preapproval_plan) pro plano escolhido do SimSim, e devolve o
+// link de checkout (init_point) que o Mercado Pago já retorna pronto.
+// Cobra automaticamente todo mês, sem o cliente precisar pagar de novo na
+// mão (diferente de Checkout Pro, que é cobrança única).
+//
+// O Access Token é configurado no painel Aiex
+// (admin.aiexbrasil.com.br > Integrações), não numa env var aqui — busca
+// no mesmo Supabase que todos os produtos da Aiex já usam (tabela
+// platform_secrets, sem nenhuma política de RLS: só o service_role lê).
+// Se ainda não tiver sido configurado por lá, responde 503 e o botão
 // "Assinar agora" cai de volta pro WhatsApp (ver script.js).
 //
 // Precisa de SUPABASE_SERVICE_ROLE_KEY nas env vars deste projeto na
@@ -50,18 +55,18 @@ export default async function handler(req, res) {
   const origin = `https://${req.headers.host}`;
 
   try {
-    const mpResponse = await fetch('https://api.mercadopago.com/checkout/preferences', {
+    const mpResponse = await fetch('https://api.mercadopago.com/preapproval_plan', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${accessToken}` },
       body: JSON.stringify({
-        items: [{ title: plan.title, quantity: 1, unit_price: plan.price, currency_id: 'BRL' }],
-        back_urls: {
-          success: `${origin}/planos/?assinatura=sucesso`,
-          pending: `${origin}/planos/?assinatura=pendente`,
-          failure: `${origin}/planos/?assinatura=falhou`,
+        reason: plan.title,
+        auto_recurring: {
+          frequency: 1,
+          frequency_type: 'months',
+          transaction_amount: plan.price,
+          currency_id: 'BRL',
         },
-        auto_return: 'approved',
-        external_reference: req.body.plan,
+        back_url: `${origin}/planos/?assinatura=sucesso`,
       }),
       signal: AbortSignal.timeout(10000),
     });
