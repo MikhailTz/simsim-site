@@ -100,8 +100,8 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--orange-deep); o
 .device-col { display: flex; flex-direction: column; align-items: center; }
 .device-label { display: inline-flex; margin-top: 16px; padding: 8px 16px; border-radius: 999px; background: rgba(0,0,0,.32); color: #fff; font-size: .76rem; font-weight: 700; white-space: nowrap; }
 .device-laptop { position: relative; }
-.laptop-screen { border-radius: 14px 14px 0 0; border: 10px solid var(--ink); border-bottom: none; background: #f4efe9; overflow: hidden; aspect-ratio: 16/10.5; }
-.laptop-screen img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; }
+.laptop-screen { border-radius: 14px 14px 0 0; border: 10px solid var(--ink); border-bottom: none; background: #f4efe9; overflow: hidden; aspect-ratio: 1822/863; }
+.laptop-screen img { width: 100%; height: 100%; object-fit: contain; display: block; }
 .laptop-base { height: 16px; background: linear-gradient(var(--ink), #0f0c09); border-radius: 0 0 10px 10px; position: relative; }
 .laptop-base::after { content: ""; position: absolute; left: 50%; top: 0; transform: translateX(-50%); width: 90px; height: 5px; background: #33291f; border-radius: 0 0 6px 6px; }
 
@@ -125,10 +125,10 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--orange-deep); o
 
 /* Cupom saindo da impressora térmica — corpo escuro com fenda e o print
    real do cupom "saindo" por baixo, com a borda inferior serrilhada. */
-.printer-body { width: 150px; height: 30px; margin: 0 auto; background: linear-gradient(var(--ink), #100d0a); border-radius: 8px 8px 3px 3px; position: relative; box-shadow: 0 10px 24px rgba(0,0,0,.25); }
-.printer-body::after { content: ""; position: absolute; left: 50%; bottom: 5px; transform: translateX(-50%); width: 110px; height: 4px; background: #000; border-radius: 2px; opacity: .7; }
-.printer-body::before { content: ""; position: absolute; right: 16px; top: 9px; width: 6px; height: 6px; border-radius: 50%; background: #3ecf6a; box-shadow: 0 0 6px #3ecf6a; }
-.receipt-shot { width: 180px; margin: -2px auto 0; box-shadow: 0 16px 40px rgba(28,23,18,.2); clip-path: polygon(0 0,100% 0,100% 96%,92% 100%,84% 96%,76% 100%,68% 96%,60% 100%,52% 96%,44% 100%,36% 96%,28% 100%,20% 96%,12% 100%,4% 96%,0 100%); }
+.printer-body { width: 220px; height: 40px; margin: 0 auto; background: linear-gradient(var(--ink), #100d0a); border-radius: 10px 10px 4px 4px; position: relative; box-shadow: 0 10px 24px rgba(0,0,0,.25); }
+.printer-body::after { content: ""; position: absolute; left: 50%; bottom: 7px; transform: translateX(-50%); width: 160px; height: 5px; background: #000; border-radius: 2px; opacity: .7; }
+.printer-body::before { content: ""; position: absolute; right: 20px; top: 12px; width: 7px; height: 7px; border-radius: 50%; background: #3ecf6a; box-shadow: 0 0 6px #3ecf6a; }
+.receipt-shot { width: 190px; margin: -3px auto 0; box-shadow: 0 16px 40px rgba(28,23,18,.2); clip-path: polygon(0 0,100% 0,100% 96%,92% 100%,84% 96%,76% 100%,68% 96%,60% 100%,52% 96%,44% 100%,36% 96%,28% 100%,20% 96%,12% 100%,4% 96%,0 100%); }
 .receipt-shot img { display: block; width: 100%; }
 .phone-screen { padding: 12px 12px 0; background: var(--bg-soft); min-height: 340px; }
 .phone-store { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
