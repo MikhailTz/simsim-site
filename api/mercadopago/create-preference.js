@@ -1,12 +1,33 @@
 // Cria uma preferência de pagamento (Checkout Pro) do Mercado Pago pra
-// assinatura de um dos planos do SimSim. Fica pronta pra usar assim que
-// MERCADOPAGO_ACCESS_TOKEN for configurado nas variáveis de ambiente do
-// projeto na Vercel — até lá, responde 503 e o botão "Assinar agora"
-// cai de volta pro WhatsApp (ver script.js).
+// assinatura de um dos planos do SimSim. O Access Token é configurado no
+// painel Aiex (admin.aiexbrasil.com.br > Integrações), não numa env var
+// aqui — só busca no mesmo Supabase que todos os produtos da Aiex já usam
+// (tabela platform_secrets, sem nenhuma política de RLS: só o service_role
+// lê). Se ainda não tiver sido configurado por lá, responde 503 e o botão
+// "Assinar agora" cai de volta pro WhatsApp (ver script.js).
+//
+// Precisa de SUPABASE_SERVICE_ROLE_KEY nas env vars deste projeto na
+// Vercel (Supabase > Project Settings > API Keys > "service_role secret")
+// — configuração única, não muda quando o token do Mercado Pago é trocado.
+const SUPABASE_URL = 'https://syewayifxwinkcatuewd.supabase.co';
+
 const PLANS = {
   bot: { title: 'SimSim Bot — assinatura mensal', price: 200 },
   ia: { title: 'SimSim IA — assinatura mensal', price: 350 },
 };
+
+async function getMercadoPagoAccessToken() {
+  const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!serviceRoleKey) return null;
+
+  const response = await fetch(
+    `${SUPABASE_URL}/rest/v1/platform_secrets?key=eq.mercadopago_access_token&select=value`,
+    { headers: { apikey: serviceRoleKey, Authorization: `Bearer ${serviceRoleKey}` }, signal: AbortSignal.timeout(8000) },
+  );
+  if (!response.ok) return null;
+  const rows = await response.json();
+  return rows[0]?.value || null;
+}
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -14,15 +35,15 @@ export default async function handler(req, res) {
     return;
   }
 
-  const accessToken = process.env.MERCADOPAGO_ACCESS_TOKEN;
-  if (!accessToken) {
-    res.status(503).json({ error: 'not_configured' });
-    return;
-  }
-
   const plan = PLANS[req.body?.plan];
   if (!plan) {
     res.status(400).json({ error: 'invalid_plan' });
+    return;
+  }
+
+  const accessToken = await getMercadoPagoAccessToken().catch(() => null);
+  if (!accessToken) {
+    res.status(503).json({ error: 'not_configured' });
     return;
   }
 
