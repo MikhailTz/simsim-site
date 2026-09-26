@@ -83,6 +83,13 @@ document.querySelectorAll('[data-checkout]').forEach((btn) => {
   const bike = document.getElementById('trackBike');
   const caption = document.getElementById('demoCaption');
   const tabs = document.querySelectorAll('.demo-tab');
+  const subtabs = document.querySelectorAll('.demo-subtab');
+  const linhaSub = document.getElementById('demoSubtabs');
+  const painelScreen = document.getElementById('painelScreen');
+  const pnList = document.getElementById('pnList');
+  const pnCount = document.getElementById('pnCount');
+  const aparelho = document.querySelector('.wa-demo');
+  const gestor = document.getElementById('gestorDemo');
 
   // Textos iguais aos padrões das mensagens automáticas do sistema
   // (lib/messageTemplates.ts e orderStatusMessages.ts no simsim-app).
@@ -151,6 +158,21 @@ document.querySelectorAll('[data-checkout]').forEach((btn) => {
         { de: 'out', texto: 'Beleza, passo aí em 10 minutos 👍' },
       ],
     },
+    'loja-gestor': {
+      legenda: 'A loja escolhe as entregas no mapa, seleciona o motoboy e despacha',
+      tela: 'gestor',
+    },
+    'loja-whats': {
+      legenda: 'O motoboy recebe a rota com todos os pedidos no WhatsApp da loja',
+      passos: [
+        { de: 'in', texto: 'Rota de entrega: 2 pedidos\n\n1. B-4803 · Maria (21 99999-0101)\n   Rua das Palmeiras, 80, Centro\n   Cobrar: R$ 58,00 (Pix)\n\n2. B-4797 · João (21 99999-0202)\n   Rua do Sol, 12, Jardim\n   Já pago, não precisa cobrar', botoes: ['🗺️ Abrir rota completa'] },
+        { de: 'out', texto: '👍 Saindo agora!' },
+      ],
+    },
+    'loja-painel': {
+      legenda: 'No site do motoboy, as entregas despachadas aparecem sozinhas em "Em entrega"',
+      tela: 'painel',
+    },
   };
 
   const reduzido = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -160,6 +182,7 @@ document.querySelectorAll('[data-checkout]').forEach((btn) => {
 
   function mostrarChat(limpar = true) {
     trackScreen.hidden = true;
+    painelScreen.hidden = true;
     waScreen.hidden = false;
     if (limpar) chat.innerHTML = '';
     if (status) status.textContent = 'online';
@@ -251,24 +274,175 @@ document.querySelectorAll('[data-checkout]').forEach((btn) => {
   }
   function mostrarStatus() {
     waScreen.hidden = true;
+    painelScreen.hidden = true;
     trackScreen.hidden = false;
     moverMoto(0);
   }
 
   function mostrarParado(demo) {
+    if (demo.tela === 'gestor') { resetGestor(); despachadoNoGestor(); return; }
+    if (demo.tela === 'painel') { mostrarPainel(); pnList.innerHTML = ''; CLIENTES.forEach((c) => pnList.appendChild(cardPainel(c))); pnCount.textContent = '2 pedidos'; return; }
     mostrarChat();
     const temMapa = demo.passos.some((p) => p.track);
     if (temMapa) { mostrarStatus(); moverMoto(0.6); return; }
     demo.passos.filter((p) => p.de).forEach(balao);
   }
 
+  // ---- Aba "Entregas" -------------------------------------------------
+  // Os mesmos dois clientes nas três visões (Gestor, WhatsApp e site do
+  // motoboy), pra ficar claro que é a mesma entrega passando de mão em mão.
+  const CLIENTES = [
+    { num: 'B-4803', nome: 'Maria', end: 'Rua das Palmeiras, 80, Centro', valor: 'R$ 58,00', pag: 'Pix', pago: false, fim: '5 min restantes' },
+    { num: 'B-4797', nome: 'João', end: 'Rua do Sol, 12, Jardim', valor: 'R$ 71,50', pag: 'Dinheiro', pago: true, fim: '9 min restantes' },
+  ];
+  const g = (id) => document.getElementById(id);
+  const gdCanvas = g('gdCanvas');
+  const prepOriginal = g('gdPrep').innerHTML;
+  const entOriginal = g('gdEnt').innerHTML;
+
+  function palco(qual) {
+    gestor.hidden = qual !== 'gestor';
+    aparelho.hidden = qual === 'gestor';
+    if (qual === 'gestor') escalarGestor();
+  }
+  // A tela do Gestor é desenhada em 720x420 e reduzida pra largura disponível.
+  function escalarGestor() {
+    const largura = gestor.clientWidth - 20;
+    gestor.style.setProperty('--gd-s', String(Math.min(1, largura / 720)));
+  }
+  window.addEventListener('resize', () => { if (!gestor.hidden) escalarGestor(); });
+
+  function centro(el) {
+    const c = gdCanvas.getBoundingClientRect();
+    const r = el.getBoundingClientRect();
+    const escala = c.width / 720;
+    return [(r.left - c.left + r.width / 2) / escala, (r.top - c.top + r.height / 2) / escala];
+  }
+  async function clicar(el, id) {
+    const [x, y] = centro(el);
+    const cursor = g('gdCursor');
+    cursor.style.left = x - 4 + 'px';
+    cursor.style.top = y - 2 + 'px';
+    await esperar(900, id);
+    el.classList.add('press');
+    await esperar(180, id);
+    el.classList.remove('press');
+  }
+
+  function resetGestor() {
+    g('gdMap').hidden = true;
+    g('gdRoute').hidden = true;
+    g('gdToast').hidden = true;
+    g('gdRouteList').innerHTML = '';
+    g('gdPrep').innerHTML = prepOriginal;
+    g('gdEnt').innerHTML = entOriginal;
+    g('gdPrepCount').textContent = '3';
+    g('gdEntCount').textContent = '0';
+    const sel = g('gdSelect');
+    sel.textContent = 'Selecione um motoboy…';
+    sel.classList.remove('done');
+    g('gdDispatch').classList.remove('ok');
+    ['pinMaria', 'pinJoao'].forEach((pid) => { g(pid).classList.remove('sel'); g(pid).querySelector('i').textContent = ''; });
+    const cursor = g('gdCursor');
+    cursor.style.transition = 'none';
+    cursor.style.left = '640px';
+    cursor.style.top = '380px';
+    void cursor.offsetWidth;
+    cursor.style.transition = '';
+  }
+
+  function cardEntrega(c) {
+    const el = document.createElement('div');
+    el.className = 'gd-card';
+    el.innerHTML = '<b>' + c.num + '</b><span>' + c.nome + '</span><small>🛵 Carlos</small><em>' + c.valor + '</em>';
+    return el;
+  }
+  function despachadoNoGestor() {
+    g('gdPrep').querySelectorAll('[data-cli]').forEach((el) => el.remove());
+    g('gdPrepCount').textContent = '1';
+    const ent = g('gdEnt');
+    ent.innerHTML = '';
+    CLIENTES.forEach((c) => ent.appendChild(cardEntrega(c)));
+    g('gdEntCount').textContent = '2';
+  }
+
+  function paradaNaRota(c, n) {
+    const el = document.createElement('div');
+    el.className = 'gd-stop';
+    el.innerHTML = '<i>' + n + '</i><span><b>' + c.num + '</b><small>' + c.end.split(',').slice(0, 2).join(',') + '</small><small>🕒 ' + c.fim + '</small></span>';
+    g('gdRouteList').appendChild(el);
+    g('gdRouteCount').textContent = n + (n === 1 ? ' pedido na rota' : ' pedidos na rota');
+  }
+
+  async function rodarGestor(id) {
+    resetGestor();
+    await esperar(800, id);
+    await clicar(g('gdMapBtn'), id);
+    g('gdMap').hidden = false;
+    await esperar(700, id);
+    const pins = [g('pinMaria'), g('pinJoao')];
+    for (let i = 0; i < pins.length; i++) {
+      await clicar(pins[i], id);
+      pins[i].classList.add('sel');
+      pins[i].querySelector('i').textContent = String(i + 1);
+      g('gdRoute').hidden = false;
+      paradaNaRota(CLIENTES[i], i + 1);
+      await esperar(500, id);
+    }
+    await clicar(g('gdSelect'), id);
+    g('gdSelect').textContent = 'Carlos';
+    g('gdSelect').classList.add('done');
+    g('gdDispatch').classList.add('ok');
+    await esperar(400, id);
+    await clicar(g('gdDispatch'), id);
+    g('gdToast').hidden = false;
+    await esperar(1500, id);
+    g('gdMap').hidden = true;
+    await esperar(300, id);
+    despachadoNoGestor();
+    await esperar(3000, id);
+  }
+
+  function cardPainel(c) {
+    const el = document.createElement('div');
+    el.className = 'pn-card';
+    el.innerHTML = '<div class="pn-card-top"><span>' + c.num + '</span><span>agora</span></div>' +
+      '<div class="pn-card-name"><b>' + c.nome + '</b><span>💬</span></div><small>📍 ' + c.end + '</small>' +
+      '<div class="pn-card-pay"><span>' + c.valor + '</span><em class="' + (c.pago ? 'pago">' + c.pag + ' · Já pago' : 'cobrar">' + c.pag + ' · A cobrar') + '</em></div>';
+    return el;
+  }
+  function mostrarPainel() {
+    waScreen.hidden = true;
+    trackScreen.hidden = true;
+    painelScreen.hidden = false;
+    pnList.innerHTML = '<p class="pn-empty">Nenhuma entrega sua em andamento.</p>';
+    pnCount.textContent = '0 pedidos';
+  }
+  async function rodarPainel(id) {
+    mostrarPainel();
+    await esperar(1400, id);
+    pnList.innerHTML = '';
+    for (let i = 0; i < CLIENTES.length; i++) {
+      pnList.appendChild(cardPainel(CLIENTES[i]));
+      pnCount.textContent = (i + 1) + (i === 0 ? ' pedido' : ' pedidos');
+      await esperar(1300, id);
+    }
+    await esperar(3000, id);
+  }
+
   async function rodar(chave) {
     const id = ++execucao;
     const demo = DEMOS[chave];
     if (caption) caption.textContent = demo.legenda;
+    palco(demo.tela === 'gestor' ? 'gestor' : 'celular');
     if (reduzido) return mostrarParado(demo);
     try {
-      for (;;) {
+      if (demo.tela) {
+        await (demo.tela === 'gestor' ? rodarGestor(id) : rodarPainel(id));
+        selecionar(ORDEM[(ORDEM.indexOf(chave) + 1) % ORDEM.length]);
+        return;
+      }
+      {
         mostrarChat();
         await esperar(600, id);
         for (const passo of demo.passos) {
@@ -305,20 +479,59 @@ document.querySelectorAll('[data-checkout]').forEach((btn) => {
           }
         }
         await esperar(3000, id);
+        // Terminou a história: passa sozinho pra próxima aba, assim quem só
+        // fica olhando vê todos os exemplos sem precisar tocar em nada.
+        selecionar(ORDEM[(ORDEM.indexOf(chave) + 1) % ORDEM.length]);
+        return;
       }
     } catch (e) {
       // Outra aba foi escolhida: esta execução para aqui.
     }
   }
 
-  let atual = 'atendimento';
+  const ORDEM = [...tabs].map((t) => t.dataset.demo).filter((k) => DEMOS[k]).concat([...subtabs].map((t) => t.dataset.demo));
+  const linhaAbas = document.querySelector('.demo-tabs');
+  let atual = ORDEM[0];
   let visivel = false;
-  tabs.forEach((tab) => {
-    tab.addEventListener('click', () => {
-      tabs.forEach((t) => { t.classList.toggle('active', t === tab); t.setAttribute('aria-selected', String(t === tab)); });
-      atual = tab.dataset.demo;
-      if (visivel) rodar(atual);
+
+  function selecionar(chave) {
+    atual = chave;
+    const grupo = chave.split('-')[0];
+    if (linhaSub) linhaSub.hidden = grupo !== 'loja';
+    subtabs.forEach((t) => t.classList.toggle('active', t.dataset.demo === chave));
+    tabs.forEach((t) => {
+      const ativa = t.dataset.demo === grupo;
+      t.classList.toggle('active', ativa);
+      t.setAttribute('aria-selected', String(ativa));
+      // No celular as abas ficam numa linha que desliza: centraliza a aba
+      // ativa só nessa linha (sem mexer na rolagem da página).
+      if (ativa && linhaAbas && linhaAbas.scrollWidth > linhaAbas.clientWidth) {
+        linhaAbas.scrollTo({ left: t.offsetLeft - (linhaAbas.clientWidth - t.offsetWidth) / 2, behavior: 'smooth' });
+      }
     });
+    if (visivel) rodar(chave);
+  }
+
+  tabs.forEach((tab) => tab.addEventListener('click', () => selecionar(tab.dataset.demo === 'loja' ? 'loja-gestor' : tab.dataset.demo)));
+  subtabs.forEach((tab) => tab.addEventListener('click', () => selecionar(tab.dataset.demo)));
+
+  // Deslizar o dedo pro lado em cima do celular (ou da tela do Gestor)
+  // troca de aba.
+  let toqueX = null;
+  let toqueY = null;
+  const inicioToque = (e) => { toqueX = e.touches[0].clientX; toqueY = e.touches[0].clientY; };
+  const fimToque = (e) => {
+    if (toqueX === null) return;
+    const dx = e.changedTouches[0].clientX - toqueX;
+    const dy = e.changedTouches[0].clientY - toqueY;
+    toqueX = null;
+    if (Math.abs(dx) < 50 || Math.abs(dx) < Math.abs(dy) * 1.5) return;
+    const i = ORDEM.indexOf(atual);
+    selecionar(ORDEM[(i + (dx < 0 ? 1 : -1) + ORDEM.length) % ORDEM.length]);
+  };
+  [aparelho, gestor].forEach((el) => {
+    el.addEventListener('touchstart', inicioToque, { passive: true });
+    el.addEventListener('touchend', fimToque, { passive: true });
   });
 
   const observador = new IntersectionObserver((entradas) => {
