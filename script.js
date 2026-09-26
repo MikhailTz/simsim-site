@@ -317,18 +317,22 @@ function iniciarDemo(root) {
   const prepOriginal = gestor ? g('gdPrep').innerHTML : '';
   const entOriginal = gestor ? g('gdEnt').innerHTML : '';
 
+  // Roteirização: Gestor e celular do motoboy ficam sempre no palco (lado a
+  // lado no computador, sobrepostos com troca suave no celular); aqui só
+  // marca qual está em destaque, sem esconder nada, pra não haver salto de
+  // layout entre a tela horizontal e a vertical.
+  const palcoEl = el('rotStage');
   function palco(qual) {
-    if (!gestor) return;
-    gestor.hidden = qual !== 'gestor';
-    aparelho.hidden = qual === 'gestor';
-    if (qual === 'gestor') escalarGestor();
+    if (!gestor || !palcoEl) return;
+    palcoEl.dataset.palco = qual;
+    escalarGestor();
   }
   // A tela do Gestor é desenhada em 720x420 e reduzida pra largura disponível.
   function escalarGestor() {
     const largura = gestor.clientWidth - 20;
     gestor.style.setProperty('--gd-s', String(Math.min(1, largura / 720)));
   }
-  window.addEventListener('resize', () => { if (gestor && !gestor.hidden) escalarGestor(); });
+  window.addEventListener('resize', () => { if (gestor) escalarGestor(); });
 
   function centro(el) {
     const c = gdCanvas.getBoundingClientRect();
@@ -642,4 +646,25 @@ document.querySelectorAll('[data-demo-root]').forEach(iniciarDemo);
   const faixa = document.querySelector('.marquee');
   if (!faixa || !('IntersectionObserver' in window)) return;
   new IntersectionObserver((e) => faixa.classList.toggle('paused', !e.some((x) => x.isIntersecting))).observe(faixa);
+})();
+
+// Bolinha "i" dos cards de funcionalidade: abre/fecha o balão com a
+// observação; fecha ao clicar fora ou apertar Esc.
+(function () {
+  const botoes = document.querySelectorAll('.feat-info');
+  if (!botoes.length) return;
+  const fechar = (exceto) => botoes.forEach((b) => {
+    if (b === exceto) return;
+    b.setAttribute('aria-expanded', 'false');
+    b.nextElementSibling.hidden = true;
+  });
+  botoes.forEach((b) => b.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const abrir = b.getAttribute('aria-expanded') !== 'true';
+    fechar(b);
+    b.setAttribute('aria-expanded', String(abrir));
+    b.nextElementSibling.hidden = !abrir;
+  }));
+  document.addEventListener('click', () => fechar(null));
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') fechar(null); });
 })();

@@ -532,9 +532,14 @@ footer a:hover { color: var(--orange-light); }
 }
 .marquee.paused .marquee-track { animation-play-state: paused; }
 
-/* Observação curta dentro de um card de funcionalidade (ícone "i"). */
-.feat-note { display: flex; gap: 7px; align-items: flex-start; margin-top: 12px; padding: 8px 10px; border-radius: 10px; background: var(--bg-soft); color: var(--muted); font-size: .74rem; line-height: 1.45; }
-.feat-note i { flex-shrink: 0; width: 15px; height: 15px; margin-top: 1px; border-radius: 50%; border: 1.5px solid var(--orange-deep); color: var(--orange-deep); font-style: normal; font-weight: 800; font-size: .6rem; display: grid; place-items: center; font-family: Georgia, serif; }
+/* Observação de um card de funcionalidade: bolinha "i" no canto do card
+   que abre um balão ao tocar/clicar, sem ocupar espaço no card. */
+.feat-card { position: relative; }
+.feat-info { position: absolute; top: 16px; right: 16px; width: 24px; height: 24px; border-radius: 50%; border: 1.5px solid var(--orange-deep); background: var(--bg); color: var(--orange-deep); font: 800 .72rem Georgia, serif; cursor: pointer; display: grid; place-items: center; transition: background .2s, color .2s; z-index: 2; }
+.feat-info:hover, .feat-info[aria-expanded="true"] { background: var(--orange-deep); color: #fff; }
+.feat-tip { position: absolute; top: 48px; right: 12px; left: 12px; z-index: 3; padding: 10px 12px; border-radius: 12px; background: var(--ink); color: #fff; font-size: .78rem; line-height: 1.45; box-shadow: 0 12px 28px rgba(0,0,0,.2); }
+.feat-tip[hidden] { display: none; }
+.feat-tip::before { content: ""; position: absolute; top: -6px; right: 18px; width: 12px; height: 12px; background: var(--ink); transform: rotate(45deg); }
 
 /* ---------- Blog ----------
    Listagem escura com cards (referência do dono), artigos em fundo claro
@@ -610,4 +615,20 @@ footer a:hover { color: var(--orange-light); }
   .post-body { font-size: 1rem; }
   .post-stats { grid-template-columns: repeat(2, 1fr); }
   .post-cta { flex-direction: column; align-items: flex-start; }
+}
+
+/* Roteirização: palco com o Gestor e o celular do motoboy juntos. No
+   computador ficam lado a lado (o ativo em destaque, o outro apagado); no
+   celular ocupam o mesmo espaço e trocam com fade, sem mudar de altura. */
+.rot-stage { display: grid; grid-template-columns: minmax(0, 740px) 300px; justify-content: center; gap: 48px; align-items: center; margin: 0 auto; }
+.rot-stage .gestor-demo { width: 100%; }
+.rot-stage .wa-demo { margin: 0; }
+.rot-stage > .gestor-demo, .rot-stage > .wa-demo { transition: opacity .5s ease, transform .5s ease, filter .5s ease; }
+.rot-stage[data-palco="gestor"] > .wa-demo, .rot-stage[data-palco="celular"] > .gestor-demo { opacity: .38; transform: scale(.94); filter: saturate(.5); }
+@media (max-width: 900px) {
+  .rot-stage { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  .rot-stage > .gestor-demo { min-width: 0; }
+  .rot-stage > .gestor-demo, .rot-stage > .wa-demo { grid-area: 1 / 1; }
+  .rot-stage .wa-demo { margin: 0 auto; }
+  .rot-stage[data-palco="gestor"] > .wa-demo, .rot-stage[data-palco="celular"] > .gestor-demo { opacity: 0; transform: scale(.96); pointer-events: none; }
 }
