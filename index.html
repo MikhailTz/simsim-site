@@ -100,8 +100,49 @@
           <button type="button" class="demo-tab" role="tab" aria-selected="false" data-demo="confirmado">Pedido confirmado</button>
           <button type="button" class="demo-tab" role="tab" aria-selected="false" data-demo="entrega">Acompanhar entrega</button>
           <button type="button" class="demo-tab" role="tab" aria-selected="false" data-demo="retirada">Virou retirada</button>
+          <button type="button" class="demo-tab" role="tab" aria-selected="false" data-demo="loja">Entregas</button>
+        </div>
+        <div class="demo-subtabs" id="demoSubtabs" hidden>
+          <button type="button" class="demo-subtab" data-demo="loja-gestor">1. Gestor despacha</button>
+          <button type="button" class="demo-subtab" data-demo="loja-whats">2. Motoboy recebe</button>
+          <button type="button" class="demo-subtab" data-demo="loja-painel">3. Site do motoboy</button>
         </div>
         <p class="demo-caption" id="demoCaption">Respostas automáticas pras perguntas mais comuns, a qualquer hora</p>
+        <div class="gestor-demo" id="gestorDemo" hidden>
+          <div class="gd-screen"><div class="gd-canvas" id="gdCanvas">
+            <div class="gd-kanban" id="gdKanban">
+              <div class="gd-top"><b>Gestor de pedidos</b><span class="gd-search">Buscar (Nome, Telefone ou Código)</span><span class="gd-new">+ Novo Pedido</span></div>
+              <div class="gd-cols">
+                <div class="gd-col gd-c-red"><div class="gd-head"><b>Em Análise</b> <small>1</small></div>
+                  <div class="gd-card"><b>B-4806</b><span>Paulo</span><em>R$ 69,50</em><i class="gd-acts"><u class="r">Recusar</u><u class="g">Aceitar</u></i></div></div>
+                <div class="gd-col gd-c-amber"><div class="gd-head"><b>Em Preparo</b> <small id="gdPrepCount">3</small><span class="gd-mapbtn" id="gdMapBtn">📍</span></div>
+                  <div id="gdPrep">
+                    <div class="gd-card" data-cli="maria"><b>B-4803</b><span>Maria</span><small>Rua das Palmeiras, 80</small><em>R$ 58,00</em><i class="gd-acts"><u class="r">Cancelar</u><u class="g">Avançar</u></i></div>
+                    <div class="gd-card" data-cli="joao"><b>B-4797</b><span>João</span><small>Rua do Sol, 12</small><em>R$ 71,50</em><i class="gd-acts"><u class="r">Cancelar</u><u class="g">Avançar</u></i></div>
+                    <div class="gd-card"><b>B-4790</b><span>Ana</span><small>Av. Brasil, 300</small><em>R$ 45,00</em><i class="gd-acts"><u class="r">Cancelar</u><u class="g">Avançar</u></i></div>
+                  </div></div>
+                <div class="gd-col gd-c-blue"><div class="gd-head"><b>Pronto</b> <small>0</small></div><p class="gd-empty">Nenhum pedido aqui.</p></div>
+                <div class="gd-col gd-c-green"><div class="gd-head"><b>Em Entrega</b> <small id="gdEntCount">0</small></div><div id="gdEnt"><p class="gd-empty">Nenhum pedido aqui.</p></div></div>
+              </div>
+            </div>
+            <div class="gd-map" id="gdMap" hidden>
+              <div class="gd-map-title"><b>🛵 Roteirização de Pedidos</b><small>3 aguardando entrega</small></div>
+              <span class="gd-shop" style="left:400px;top:210px">🏪</span>
+              <span class="gd-pin" id="pinMaria" style="left:320px;top:150px"><i></i><b>Maria</b></span>
+              <span class="gd-pin" id="pinJoao" style="left:500px;top:320px"><i></i><b>João</b></span>
+              <span class="gd-pin" style="left:600px;top:230px"><i></i><b>Ana</b></span>
+              <div class="gd-route" id="gdRoute" hidden>
+                <p><b>ROTA DE ENTREGA</b> <small id="gdRouteCount">1 pedido na rota</small></p>
+                <div id="gdRouteList"></div>
+                <span class="gd-select" id="gdSelect">Selecione um motoboy…</span>
+                <span class="gd-dispatch" id="gdDispatch">🛵 Despachar para motoboy</span>
+              </div>
+              <div class="gd-toast" id="gdToast" hidden>✓ Rota enviada pro Carlos no WhatsApp</div>
+            </div>
+            <span class="gd-cursor" id="gdCursor" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 2l15 9-6.5 1.5L16 20l-3 1.5-3.4-7.3L4 18z" fill="#111" stroke="#fff" stroke-width="1.5" stroke-linejoin="round"/></svg></span>
+          </div></div>
+          <div class="laptop-base"></div>
+        </div>
         <div class="wa-demo">
           <div class="phone-frame">
             <div class="phone-notch"></div>
@@ -111,6 +152,14 @@
                 <span class="wa-contact"><b>Sua Loja</b><small id="waStatus">online</small></span>
               </div>
               <div class="wa-body" id="waBody"><div class="wa-thread" id="waChat" aria-live="polite" aria-label="Exemplo de conversa no WhatsApp entre cliente e loja"></div></div>
+            </div>
+            <div class="painel-screen" id="painelScreen" hidden>
+              <div class="pn-top"><div><b>Olá, Carlos 👋</b><small>Bora pra mais entregas hoje!</small></div><span class="pn-ico">🗺️</span></div>
+              <div class="pn-stats"><div><small>Entregas hoje</small><b>0</b></div><div><small>Ganhos do dia</small><b>R$ 0,00</b></div></div>
+              <div class="pn-gps"><span>📍 Rastreamento GPS</span><em>● Ativo</em></div>
+              <div class="pn-sec"><b>Em entrega</b><small id="pnCount">0 pedidos</small></div>
+              <div class="pn-list" id="pnList"><p class="pn-empty">Nenhuma entrega sua em andamento.</p></div>
+              <div class="pn-nav"><span>🧺 Aguardando</span><span class="on">🛵 Em entrega</span><span>✓ Finalizados</span></div>
             </div>
             <div class="track-screen" id="trackScreen" hidden>
               <div class="track-top"><span class="track-back">← Cardápio</span><b>Status do pedido</b><span></span></div>
