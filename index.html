@@ -91,77 +91,36 @@
       </div>
     </section>
 
-    <section class="section" id="whatsapp-demo">
+    <section class="section" id="whatsapp-demo" data-demo-root>
       <div class="container">
         <div class="section-head center"><span class="eyebrow">Como funciona</span><h2>Veja o SimSim <span class="highlight">funcionando na prática.</span></h2><p>Escolha uma opção e veja o que o seu cliente recebe no WhatsApp, do primeiro oi até a entrega.</p></div>
         <div class="demo-tabs" role="tablist" aria-label="Exemplos de funcionamento">
-          <button type="button" class="demo-tab active" role="tab" aria-selected="true" data-demo="atendimento">Atendimento automático</button>
-          <button type="button" class="demo-tab" role="tab" aria-selected="false" data-demo="pedido">Pedido no WhatsApp</button>
-          <button type="button" class="demo-tab" role="tab" aria-selected="false" data-demo="confirmado">Pedido confirmado</button>
-          <button type="button" class="demo-tab" role="tab" aria-selected="false" data-demo="entrega">Acompanhar entrega</button>
-          <button type="button" class="demo-tab" role="tab" aria-selected="false" data-demo="retirada">Virou retirada</button>
-          <button type="button" class="demo-tab" role="tab" aria-selected="false" data-demo="loja">Entregas</button>
+          <button type="button" class="demo-tab active" role="tab" aria-selected="true" data-demo="atendimento"><span class="t-full">Atendimento automático</span><span class="t-short">Atendimento</span></button>
+          <button type="button" class="demo-tab" role="tab" aria-selected="false" data-demo="pedido"><span class="t-full">Pedido no WhatsApp</span><span class="t-short">Pedido</span></button>
+          <button type="button" class="demo-tab" role="tab" aria-selected="false" data-demo="confirmado"><span class="t-full">Pedido confirmado</span><span class="t-short">Confirmado</span></button>
+          <button type="button" class="demo-tab" role="tab" aria-selected="false" data-demo="entrega"><span class="t-full">Acompanhar entrega</span><span class="t-short">Entrega</span></button>
+          <button type="button" class="demo-tab" role="tab" aria-selected="false" data-demo="retirada"><span class="t-full">Virou retirada</span><span class="t-short">Retirada</span></button>
         </div>
-        <div class="demo-subtabs" id="demoSubtabs" hidden>
-          <button type="button" class="demo-subtab" data-demo="loja-gestor">1. Gestor despacha</button>
-          <button type="button" class="demo-subtab" data-demo="loja-whats">2. Motoboy recebe</button>
-          <button type="button" class="demo-subtab" data-demo="loja-painel">3. Site do motoboy</button>
-        </div>
-        <p class="demo-caption" id="demoCaption">Respostas automáticas pras perguntas mais comuns, a qualquer hora</p>
-        <div class="gestor-demo" id="gestorDemo" hidden>
-          <div class="gd-screen"><div class="gd-canvas" id="gdCanvas">
-            <div class="gd-kanban" id="gdKanban">
-              <div class="gd-top"><b>Gestor de pedidos</b><span class="gd-search">Buscar (Nome, Telefone ou Código)</span><span class="gd-new">+ Novo Pedido</span></div>
-              <div class="gd-cols">
-                <div class="gd-col gd-c-red"><div class="gd-head"><b>Em Análise</b> <small>1</small></div>
-                  <div class="gd-card"><b>B-4806</b><span>Paulo</span><em>R$ 69,50</em><i class="gd-acts"><u class="r">Recusar</u><u class="g">Aceitar</u></i></div></div>
-                <div class="gd-col gd-c-amber"><div class="gd-head"><b>Em Preparo</b> <small id="gdPrepCount">3</small><span class="gd-mapbtn" id="gdMapBtn">📍</span></div>
-                  <div id="gdPrep">
-                    <div class="gd-card" data-cli="maria"><b>B-4803</b><span>Maria</span><small>Rua das Palmeiras, 80</small><em>R$ 58,00</em><i class="gd-acts"><u class="r">Cancelar</u><u class="g">Avançar</u></i></div>
-                    <div class="gd-card" data-cli="joao"><b>B-4797</b><span>João</span><small>Rua do Sol, 12</small><em>R$ 71,50</em><i class="gd-acts"><u class="r">Cancelar</u><u class="g">Avançar</u></i></div>
-                    <div class="gd-card"><b>B-4790</b><span>Ana</span><small>Av. Brasil, 300</small><em>R$ 45,00</em><i class="gd-acts"><u class="r">Cancelar</u><u class="g">Avançar</u></i></div>
-                  </div></div>
-                <div class="gd-col gd-c-blue"><div class="gd-head"><b>Pronto</b> <small>0</small></div><p class="gd-empty">Nenhum pedido aqui.</p></div>
-                <div class="gd-col gd-c-green"><div class="gd-head"><b>Em Entrega</b> <small id="gdEntCount">0</small></div><div id="gdEnt"><p class="gd-empty">Nenhum pedido aqui.</p></div></div>
-              </div>
-            </div>
-            <div class="gd-map" id="gdMap" hidden>
-              <div class="gd-map-title"><b>🛵 Roteirização de Pedidos</b><small>3 aguardando entrega</small></div>
-              <span class="gd-shop" style="left:400px;top:210px">🏪</span>
-              <span class="gd-pin" id="pinMaria" style="left:320px;top:150px"><i></i><b>Maria</b></span>
-              <span class="gd-pin" id="pinJoao" style="left:500px;top:320px"><i></i><b>João</b></span>
-              <span class="gd-pin" style="left:600px;top:230px"><i></i><b>Ana</b></span>
-              <div class="gd-route" id="gdRoute" hidden>
-                <p><b>ROTA DE ENTREGA</b> <small id="gdRouteCount">1 pedido na rota</small></p>
-                <div id="gdRouteList"></div>
-                <span class="gd-select" id="gdSelect">Selecione um motoboy…</span>
-                <span class="gd-dispatch" id="gdDispatch">🛵 Despachar para motoboy</span>
-              </div>
-              <div class="gd-toast" id="gdToast" hidden>✓ Rota enviada pro Carlos no WhatsApp</div>
-            </div>
-            <span class="gd-cursor" id="gdCursor" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 2l15 9-6.5 1.5L16 20l-3 1.5-3.4-7.3L4 18z" fill="#111" stroke="#fff" stroke-width="1.5" stroke-linejoin="round"/></svg></span>
-          </div></div>
-          <div class="laptop-base"></div>
-        </div>
+        <p class="demo-caption" data-el="demoCaption">Respostas automáticas pras perguntas mais comuns, a qualquer hora</p>
         <div class="wa-demo">
           <div class="phone-frame">
             <div class="phone-notch"></div>
-            <div class="wa-screen" id="waScreen">
+            <div class="wa-screen" data-el="waScreen">
               <div class="wa-header">
                 <span class="wa-avatar" aria-hidden="true">SL</span>
-                <span class="wa-contact"><b>Sua Loja</b><small id="waStatus">online</small></span>
+                <span class="wa-contact"><b>Sua Loja</b><small data-el="waStatus">online</small></span>
               </div>
-              <div class="wa-body" id="waBody"><div class="wa-thread" id="waChat" aria-live="polite" aria-label="Exemplo de conversa no WhatsApp entre cliente e loja"></div></div>
+              <div class="wa-body" data-el="waBody"><div class="wa-thread" data-el="waChat" aria-live="polite" aria-label="Exemplo de conversa no WhatsApp entre cliente e loja"></div></div>
             </div>
-            <div class="painel-screen" id="painelScreen" hidden>
+            <div class="painel-screen" data-el="painelScreen" hidden>
               <div class="pn-top"><div><b>Olá, Carlos 👋</b><small>Bora pra mais entregas hoje!</small></div><span class="pn-ico">🗺️</span></div>
               <div class="pn-stats"><div><small>Entregas hoje</small><b>0</b></div><div><small>Ganhos do dia</small><b>R$ 0,00</b></div></div>
               <div class="pn-gps"><span>📍 Rastreamento GPS</span><em>● Ativo</em></div>
-              <div class="pn-sec"><b>Em entrega</b><small id="pnCount">0 pedidos</small></div>
-              <div class="pn-list" id="pnList"><p class="pn-empty">Nenhuma entrega sua em andamento.</p></div>
+              <div class="pn-sec"><b>Em entrega</b><small data-el="pnCount">0 pedidos</small></div>
+              <div class="pn-list" data-el="pnList"><p class="pn-empty">Nenhuma entrega sua em andamento.</p></div>
               <div class="pn-nav"><span>🧺 Aguardando</span><span class="on">🛵 Em entrega</span><span>✓ Finalizados</span></div>
             </div>
-            <div class="track-screen" id="trackScreen" hidden>
+            <div class="track-screen" data-el="trackScreen" hidden>
               <div class="track-top"><span class="track-back">← Cardápio</span><b>Status do pedido</b><span></span></div>
               <p class="track-num">Pedido B-4598</p>
               <p class="track-state">Saiu para entrega</p>
@@ -176,7 +135,95 @@
                   <g fill="#dfe6da"><rect x="8" y="8" width="70" height="36" rx="3"/><rect x="92" y="8" width="76" height="36" rx="3"/><rect x="182" y="8" width="70" height="36" rx="3"/><rect x="8" y="58" width="70" height="36" rx="3"/><rect x="92" y="58" width="76" height="36" rx="3"/><rect x="182" y="58" width="70" height="36" rx="3"/><rect x="8" y="108" width="70" height="34" rx="3"/><rect x="92" y="108" width="76" height="34" rx="3"/><rect x="182" y="108" width="70" height="34" rx="3"/></g>
                   <polyline points="30,101 85,101 85,51 175,51 175,20" fill="none" stroke="#16a34a" stroke-width="3" stroke-dasharray="5 4" opacity=".55"/>
                   <g transform="translate(175 20)"><circle r="9" fill="#2563eb"/><path d="M-4 1 L0 -3 L4 1 L4 4 L-4 4 Z" fill="#fff"/></g>
-                  <g id="trackBike" transform="translate(30 101)"><circle r="9" fill="#16a34a" stroke="#fff" stroke-width="2"/><text y="3.5" text-anchor="middle" font-size="9">🛵</text></g>
+                  <g data-el="trackBike" transform="translate(30 101)"><circle r="9" fill="#16a34a" stroke="#fff" stroke-width="2"/><text y="3.5" text-anchor="middle" font-size="9">🛵</text></g>
+                </svg>
+              </div>
+              <span class="track-btn">Acompanhar meu pedido</span>
+              <span class="track-btn">Fazer outro pedido</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="roteirizacao" data-demo-root>
+      <div class="container">
+        <div class="section-head center"><span class="eyebrow">Roteirização de entregas</span><h2>Roteirização de entrega <span class="highlight">completa.</span></h2><p>A loja monta a rota no mapa, o motoboy recebe tudo no WhatsApp e acompanha as entregas no próprio celular.</p></div>
+        <div class="demo-tabs" role="tablist" aria-label="Etapas da roteirização de entregas">
+          <button type="button" class="demo-tab active" role="tab" aria-selected="true" data-demo="loja-gestor"><span class="t-full">1. Gestor despacha</span><span class="t-short">1. Gestor</span></button>
+          <button type="button" class="demo-tab" role="tab" aria-selected="false" data-demo="loja-whats"><span class="t-full">2. Motoboy recebe</span><span class="t-short">2. WhatsApp</span></button>
+          <button type="button" class="demo-tab" role="tab" aria-selected="false" data-demo="loja-painel"><span class="t-full">3. Site do motoboy</span><span class="t-short">3. Motoboy</span></button>
+        </div>
+        <p class="demo-caption" data-el="demoCaption">A loja escolhe as entregas no mapa, seleciona o motoboy e despacha</p>
+        <div class="gestor-demo" data-el="gestorDemo" hidden>
+          <div class="gd-screen"><div class="gd-canvas" data-el="gdCanvas">
+            <div class="gd-kanban" data-el="gdKanban">
+              <div class="gd-top"><b>Gestor de pedidos</b><span class="gd-search">Buscar (Nome, Telefone ou Código)</span><span class="gd-new">+ Novo Pedido</span></div>
+              <div class="gd-cols">
+                <div class="gd-col gd-c-red"><div class="gd-head"><b>Em Análise</b> <small>1</small></div>
+                  <div class="gd-card"><b>B-4806</b><span>Paulo</span><em>R$ 69,50</em><i class="gd-acts"><u class="r">Recusar</u><u class="g">Aceitar</u></i></div></div>
+                <div class="gd-col gd-c-amber"><div class="gd-head"><b>Em Preparo</b> <small data-el="gdPrepCount">3</small><span class="gd-mapbtn" data-el="gdMapBtn">📍</span></div>
+                  <div data-el="gdPrep">
+                    <div class="gd-card" data-cli="maria"><b>B-4803</b><span>Maria</span><small>Rua das Palmeiras, 80</small><em>R$ 58,00</em><i class="gd-acts"><u class="r">Cancelar</u><u class="g">Avançar</u></i></div>
+                    <div class="gd-card" data-cli="joao"><b>B-4797</b><span>João</span><small>Rua do Sol, 12</small><em>R$ 71,50</em><i class="gd-acts"><u class="r">Cancelar</u><u class="g">Avançar</u></i></div>
+                    <div class="gd-card"><b>B-4790</b><span>Ana</span><small>Av. Brasil, 300</small><em>R$ 45,00</em><i class="gd-acts"><u class="r">Cancelar</u><u class="g">Avançar</u></i></div>
+                  </div></div>
+                <div class="gd-col gd-c-blue"><div class="gd-head"><b>Pronto</b> <small>0</small></div><p class="gd-empty">Nenhum pedido aqui.</p></div>
+                <div class="gd-col gd-c-green"><div class="gd-head"><b>Em Entrega</b> <small data-el="gdEntCount">0</small></div><div data-el="gdEnt"><p class="gd-empty">Nenhum pedido aqui.</p></div></div>
+              </div>
+            </div>
+            <div class="gd-map" data-el="gdMap" hidden>
+              <div class="gd-map-title"><b>🛵 Roteirização de Pedidos</b><small>3 aguardando entrega</small></div>
+              <span class="gd-shop" style="left:400px;top:210px">🏪</span>
+              <span class="gd-pin" data-el="pinMaria" style="left:320px;top:150px"><i></i><b>Maria</b></span>
+              <span class="gd-pin" data-el="pinJoao" style="left:500px;top:320px"><i></i><b>João</b></span>
+              <span class="gd-pin" style="left:600px;top:230px"><i></i><b>Ana</b></span>
+              <div class="gd-route" data-el="gdRoute" hidden>
+                <p><b>ROTA DE ENTREGA</b> <small data-el="gdRouteCount">1 pedido na rota</small></p>
+                <div data-el="gdRouteList"></div>
+                <span class="gd-select" data-el="gdSelect">Selecione um motoboy…</span>
+                <span class="gd-dispatch" data-el="gdDispatch">🛵 Despachar para motoboy</span>
+              </div>
+              <div class="gd-toast" data-el="gdToast" hidden>✓ Rota enviada pro Carlos no WhatsApp</div>
+            </div>
+            <span class="gd-cursor" data-el="gdCursor" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 2l15 9-6.5 1.5L16 20l-3 1.5-3.4-7.3L4 18z" fill="#111" stroke="#fff" stroke-width="1.5" stroke-linejoin="round"/></svg></span>
+          </div></div>
+          <div class="laptop-base"></div>
+        </div>
+        <div class="wa-demo">
+          <div class="phone-frame">
+            <div class="phone-notch"></div>
+            <div class="wa-screen" data-el="waScreen">
+              <div class="wa-header">
+                <span class="wa-avatar" aria-hidden="true">SL</span>
+                <span class="wa-contact"><b>Sua Loja</b><small data-el="waStatus">online</small></span>
+              </div>
+              <div class="wa-body" data-el="waBody"><div class="wa-thread" data-el="waChat" aria-live="polite" aria-label="Exemplo de conversa no WhatsApp entre loja e motoboy"></div></div>
+            </div>
+            <div class="painel-screen" data-el="painelScreen" hidden>
+              <div class="pn-top"><div><b>Olá, Carlos 👋</b><small>Bora pra mais entregas hoje!</small></div><span class="pn-ico">🗺️</span></div>
+              <div class="pn-stats"><div><small>Entregas hoje</small><b>0</b></div><div><small>Ganhos do dia</small><b>R$ 0,00</b></div></div>
+              <div class="pn-gps"><span>📍 Rastreamento GPS</span><em>● Ativo</em></div>
+              <div class="pn-sec"><b>Em entrega</b><small data-el="pnCount">0 pedidos</small></div>
+              <div class="pn-list" data-el="pnList"><p class="pn-empty">Nenhuma entrega sua em andamento.</p></div>
+              <div class="pn-nav"><span>🧺 Aguardando</span><span class="on">🛵 Em entrega</span><span>✓ Finalizados</span></div>
+            </div>
+            <div class="track-screen" data-el="trackScreen" hidden>
+              <div class="track-top"><span class="track-back">← Cardápio</span><b>Status do pedido</b><span></span></div>
+              <p class="track-num">Pedido B-4598</p>
+              <p class="track-state">Saiu para entrega</p>
+              <ol class="track-steps">
+                <li class="done"><i>✓</i>Recebido</li><li class="done"><i>✓</i>Confirmado</li><li class="done"><i>✓</i>Pronto</li><li class="done"><i>🛵</i>A caminho</li><li><i>⚑</i>Entregue</li>
+              </ol>
+              <div class="track-box">
+                <b>🛵 Seu pedido está a caminho</b>
+                <small>A posição é atualizada automaticamente durante a entrega.</small>
+                <svg class="track-map" viewBox="0 0 260 150" role="img" aria-label="Mapa com o motoboy a caminho do endereço">
+                  <rect width="260" height="150" fill="#eef0ec"/>
+                  <g fill="#dfe6da"><rect x="8" y="8" width="70" height="36" rx="3"/><rect x="92" y="8" width="76" height="36" rx="3"/><rect x="182" y="8" width="70" height="36" rx="3"/><rect x="8" y="58" width="70" height="36" rx="3"/><rect x="92" y="58" width="76" height="36" rx="3"/><rect x="182" y="58" width="70" height="36" rx="3"/><rect x="8" y="108" width="70" height="34" rx="3"/><rect x="92" y="108" width="76" height="34" rx="3"/><rect x="182" y="108" width="70" height="34" rx="3"/></g>
+                  <polyline points="30,101 85,101 85,51 175,51 175,20" fill="none" stroke="#16a34a" stroke-width="3" stroke-dasharray="5 4" opacity=".55"/>
+                  <g transform="translate(175 20)"><circle r="9" fill="#2563eb"/><path d="M-4 1 L0 -3 L4 1 L4 4 L-4 4 Z" fill="#fff"/></g>
+                  <g data-el="trackBike" transform="translate(30 101)"><circle r="9" fill="#16a34a" stroke="#fff" stroke-width="2"/><text y="3.5" text-anchor="middle" font-size="9">🛵</text></g>
                 </svg>
               </div>
               <span class="track-btn">Acompanhar meu pedido</span>
@@ -206,7 +253,7 @@
 
     <section class="section" id="pagamentos">
       <div class="container">
-        <div class="section-head center"><span class="eyebrow">Pagamentos</span><h2>Receba do jeito que for <span class="highlight">melhor pra você.</span></h2><p>Dinheiro, Pix, cartão na entrega ou pagamento online direto no checkout. Você escolhe, e a gente não cobra nada em cima disso.</p></div>
+        <div class="section-head center"><span class="eyebrow">Pagamentos</span><h2>Receba do jeito que for <span class="highlight">melhor pra você.</span></h2><p>O pagamento online é opcional: você tem total liberdade pra cobrar do jeito que preferir, seja dinheiro, Pix, cartão na entrega ou online direto no checkout. E a gente não cobra nada em cima disso.</p></div>
         <div class="payment-cards" style="grid-template-columns:1fr;max-width:380px">
           <div class="payment-card">
             <img src="img/payment-logos/infinitepay.png" alt="InfinitePay">
@@ -232,7 +279,7 @@
             <span class="plan-tag">Bot</span>
             <h3>SimSim Bot</h3>
             <p class="plan-desc">Respostas automáticas e organização de pedidos no WhatsApp, sem inteligência artificial.</p>
-            <div class="plan-price"><span class="amount">R$ 200</span><span class="cycle">/mês</span></div>
+            <div class="plan-price"><span class="amount">R$ 300</span><span class="cycle">/mês</span></div>
             <p class="plan-price-note">Sem multa de cancelamento</p>
             <a class="btn btn-primary" href="/planos/">Assinar agora</a>
           </div>
@@ -240,7 +287,7 @@
             <span class="plan-tag">Mais completo</span>
             <h3>SimSim IA</h3>
             <p class="plan-desc">Tudo do plano Bot, com atendimento inteligente que conversa, sugere e fecha pedido sozinho.</p>
-            <div class="plan-price"><span class="amount">R$ 350</span><span class="cycle">/mês</span></div>
+            <div class="plan-price"><span class="amount">R$ 400</span><span class="cycle">/mês</span></div>
             <p class="plan-price-note">Sem multa de cancelamento</p>
             <a class="btn btn-primary" href="/planos/">Assinar agora</a>
           </div>
