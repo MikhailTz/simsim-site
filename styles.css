@@ -96,22 +96,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--orange-deep); o
 
 /* Showcase: celular + desktop + cupom sobre o hero colorido, prova visual
    de "funciona em qualquer tela e imprime notinha de verdade". */
-.device-row { display: grid; grid-template-columns: .85fr 1.4fr .75fr; gap: 30px; align-items: end; margin-top: 56px; }
-/* Desktop: notebook grande no centro e celular/cupom sobrepostos nas
-   laterais, pra o Gestor de Pedidos não ficar miúdo perto do cardápio e
-   do cupom (pedido do dono, 2026-09-26). */
-@media (min-width: 901px) {
-  .device-row { display: flex; justify-content: center; align-items: flex-end; position: relative; min-height: 500px; }
-  .device-row > .device-col:nth-child(2) { width: min(860px, 78%); }
-  .device-row > .device-col:nth-child(2) .device-laptop { width: 100%; box-shadow: 0 30px 60px rgba(0,0,0,.25); border-radius: 14px 14px 10px 10px; }
-  .device-row > .device-col:first-child,
-  .device-row > .device-col:last-child { position: absolute; bottom: 0; z-index: 2; }
-  .device-row > .device-col:first-child { left: 0; }
-  .device-row > .device-col:last-child { right: 0; }
-  .device-row .device-phone { width: 210px; }
-  .device-row .printer-body { width: 200px; }
-  .device-row .receipt-shot { width: 175px; }
-}
+.device-row { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 40px; align-items: end; margin-top: 56px; }
 .device-col { display: flex; flex-direction: column; align-items: center; }
 .device-label { display: inline-flex; margin-top: 16px; padding: 8px 16px; border-radius: 999px; background: rgba(0,0,0,.32); color: #fff; font-size: .76rem; font-weight: 700; white-space: nowrap; }
 .device-laptop { position: relative; }
@@ -183,7 +168,6 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--orange-deep); o
 
 @media (max-width: 900px) {
   .device-row { grid-template-columns: 1fr; justify-items: center; gap: 40px; }
-  .device-laptop { width: 100%; }
   .device-phone { width: 200px; }
   .func-grid, .func-grid.cols-3 { grid-template-columns: repeat(2, 1fr); }
   .screens-grid { grid-template-columns: repeat(2, 1fr); }
@@ -294,17 +278,3 @@ footer a:hover { color: var(--orange-light); }
 .legal th { background: var(--bg-soft); font-weight: 700; }
 .legal .refs { color: var(--muted); font-size: .82rem; }
 .legal .refs a { text-decoration: underline; }
-
-/* Selo "taxa 0% no Pix online" no topo do hero. */
-.pix-zero-badge { display: inline-flex; align-items: center; gap: 10px; margin: 0 auto 14px; padding: 6px 16px 6px 6px; border-radius: 999px; background: #fff; color: var(--ink); font-size: .8rem; font-weight: 600; box-shadow: 0 8px 24px rgba(0,0,0,.14); }
-.pix-zero-badge strong { padding: 5px 11px; border-radius: 999px; background: #15803d; color: #fff; font-size: .74rem; font-weight: 800; white-space: nowrap; }
-.hero-stack .eyebrow-dark { display: flex; width: fit-content; margin-inline: auto; }
-
-.payment-card-zero { background: linear-gradient(160deg, #f0fdf4, var(--bg)); border-color: #bbf7d0; }
-.zero-rate { display: block; font-family: 'Sora', sans-serif; font-size: 2.6rem; font-weight: 800; line-height: 40px; color: #15803d; margin-bottom: 20px; }
-
-/* Card de diferencial ocupando a linha inteira da grade de funcionalidades. */
-.func-card-feature { grid-column: 1 / -1; display: flex; gap: 18px; align-items: flex-start; border-color: var(--orange); background: linear-gradient(120deg, var(--peach), var(--bg) 70%); }
-.func-card-feature .icon-box { flex-shrink: 0; margin-bottom: 0; background: var(--orange-deep); color: #fff; }
-.func-card-feature h3 { font-size: 1.05rem; }
-.feature-tag { display: inline-block; margin-bottom: 6px; padding: 3px 10px; border-radius: 999px; background: var(--orange-deep); color: #fff; font-size: .68rem; font-weight: 700; letter-spacing: .02em; }
