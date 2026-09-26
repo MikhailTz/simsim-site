@@ -529,3 +529,7 @@ footer a:hover { color: var(--orange-light); }
   .demo-tabs.five .demo-tab:nth-child(5) { grid-column: 4 / span 2; }
 }
 .marquee.paused .marquee-track { animation-play-state: paused; }
+
+/* Observação curta dentro de um card de funcionalidade (ícone "i"). */
+.feat-note { display: flex; gap: 7px; align-items: flex-start; margin-top: 12px; padding: 8px 10px; border-radius: 10px; background: var(--bg-soft); color: var(--muted); font-size: .74rem; line-height: 1.45; }
+.feat-note i { flex-shrink: 0; width: 15px; height: 15px; margin-top: 1px; border-radius: 50%; border: 1.5px solid var(--orange-deep); color: var(--orange-deep); font-style: normal; font-weight: 800; font-size: .6rem; display: grid; place-items: center; font-family: Georgia, serif; }
