@@ -589,14 +589,14 @@ document.querySelectorAll('[data-demo-root]').forEach(iniciarDemo);
 })();
 
 // Topo da Home no celular: cardápio, gestor e cupom num carrossel. O item
-// mais perto do centro fica em destaque; setas e nomes levam direto a cada
-// um, e ele passa sozinho enquanto o topo está na tela (pausa ao tocar).
+// mais perto do centro fica em destaque; as setas passam pro anterior e
+// pro próximo, e ele passa sozinho enquanto o topo está na tela (pausa ao
+// tocar).
 (function () {
   const row = document.querySelector('.device-row');
   const nav = document.querySelector('.device-nav');
   if (!row || !nav) return;
   const cols = [...row.querySelectorAll('.device-col')];
-  const dots = [...nav.querySelectorAll('.device-dot')];
   let ativo = 0;
   let pausaAte = 0;
   let naTela = true;
@@ -605,11 +605,10 @@ document.querySelectorAll('[data-demo-root]').forEach(iniciarDemo);
   function marcar(i) {
     ativo = i;
     cols.forEach((c, k) => c.classList.toggle('active', k === i));
-    dots.forEach((d, k) => d.classList.toggle('active', k === i));
   }
-  function ir(i) {
+  function ir(i, suave = true) {
     const alvo = cols[(i + cols.length) % cols.length];
-    row.scrollTo({ left: alvo.offsetLeft - (row.clientWidth - alvo.offsetWidth) / 2, behavior: 'smooth' });
+    row.scrollTo({ left: alvo.offsetLeft - (row.clientWidth - alvo.offsetWidth) / 2, behavior: suave ? 'smooth' : 'auto' });
   }
   let quadro = 0;
   row.addEventListener('scroll', () => {
@@ -625,10 +624,12 @@ document.querySelectorAll('[data-demo-root]').forEach(iniciarDemo);
   }, { passive: true });
   const segurar = () => { pausaAte = Date.now() + 8000; };
   row.addEventListener('touchstart', segurar, { passive: true });
-  dots.forEach((d) => d.addEventListener('click', () => { segurar(); ir(Number(d.dataset.i)); }));
   nav.querySelectorAll('.device-arrow').forEach((b) => b.addEventListener('click', () => { segurar(); ir(ativo + Number(b.dataset.dir)); }));
   new IntersectionObserver((e) => { naTela = e.some((x) => x.isIntersecting); }, { threshold: 0.3 }).observe(row);
+  // Começa com o primeiro (cardápio) centralizado.
   marcar(0);
+  if (carrossel()) ir(0, false);
+  window.addEventListener('load', () => { if (carrossel()) ir(ativo, false); });
   if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     setInterval(() => {
       if (carrossel() && naTela && !document.hidden && Date.now() > pausaAte) ir(ativo + 1);
