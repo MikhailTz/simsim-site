@@ -294,7 +294,11 @@ footer a:hover { color: var(--orange-light); }
 .wa-contact { display: flex; flex-direction: column; line-height: 1.2; }
 .wa-contact b { font-size: .82rem; }
 .wa-contact small { font-size: .68rem; opacity: .85; }
-.wa-body { height: 440px; padding: 12px 10px; display: flex; flex-direction: column; justify-content: flex-end; gap: 6px; overflow: hidden; font-family: Inter, system-ui, sans-serif; }
+/* A conversa sobe e guarda o histórico (rola sozinha pro fim a cada
+   mensagem nova); a barra de rolagem fica escondida. */
+.wa-body { height: 440px; padding: 12px 10px; overflow-y: auto; scrollbar-width: none; font-family: Inter, system-ui, sans-serif; }
+.wa-body::-webkit-scrollbar { display: none; }
+.wa-thread { min-height: 100%; display: flex; flex-direction: column; justify-content: flex-end; gap: 6px; }
 .wa-msg { max-width: 84%; padding: 7px 9px 5px; border-radius: 8px; font-size: .76rem; line-height: 1.4; color: #111b21; box-shadow: 0 1px 1px rgba(0,0,0,.08); animation: waIn .28s ease-out both; flex-shrink: 0; }
 .wa-msg.in { align-self: flex-start; background: #fff; border-top-left-radius: 2px; }
 .wa-msg.out { align-self: flex-end; background: #d9fdd3; border-top-right-radius: 2px; }
