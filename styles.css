@@ -278,3 +278,27 @@ footer a:hover { color: var(--orange-light); }
 .legal th { background: var(--bg-soft); font-weight: 700; }
 .legal .refs { color: var(--muted); font-size: .82rem; }
 .legal .refs a { text-decoration: underline; }
+
+/* Conversa animada de WhatsApp (seção "Atendimento no WhatsApp" da Home):
+   mensagens entram uma a uma, com "digitando…" antes das respostas da
+   loja. Conteúdo e tempo ficam em script.js. */
+.wa-demo { width: 300px; margin: 0 auto; }
+.wa-demo .phone-frame { background: #efeae2; }
+.wa-header { display: flex; align-items: center; gap: 10px; padding: 10px 12px; background: #075e54; color: #fff; }
+.wa-avatar { width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg, var(--orange-deep), var(--orange)); display: grid; place-items: center; font-size: .7rem; font-weight: 800; flex-shrink: 0; }
+.wa-contact { display: flex; flex-direction: column; line-height: 1.2; }
+.wa-contact b { font-size: .82rem; }
+.wa-contact small { font-size: .68rem; opacity: .85; }
+.wa-body { height: 440px; padding: 12px 10px; display: flex; flex-direction: column; justify-content: flex-end; gap: 6px; overflow: hidden; font-family: Inter, system-ui, sans-serif; }
+.wa-msg { max-width: 82%; padding: 7px 9px 5px; border-radius: 8px; font-size: .76rem; line-height: 1.4; color: #111b21; box-shadow: 0 1px 1px rgba(0,0,0,.08); animation: waIn .28s ease-out both; }
+.wa-msg.in { align-self: flex-start; background: #fff; border-top-left-radius: 2px; }
+.wa-msg.out { align-self: flex-end; background: #d9fdd3; border-top-right-radius: 2px; }
+.wa-msg time { display: block; text-align: right; font-size: .6rem; color: #667781; margin-top: 2px; }
+.wa-btn { display: block; margin-top: 6px; padding-top: 6px; border-top: 1px solid rgba(0,0,0,.08); text-align: center; color: #027eb5; font-weight: 600; }
+.wa-typing { align-self: flex-start; background: #fff; border-radius: 8px; border-top-left-radius: 2px; padding: 10px 12px; display: flex; gap: 4px; box-shadow: 0 1px 1px rgba(0,0,0,.08); animation: waIn .2s ease-out both; }
+.wa-typing span { width: 6px; height: 6px; border-radius: 50%; background: #8696a0; animation: waDot 1s infinite; }
+.wa-typing span:nth-child(2) { animation-delay: .15s; }
+.wa-typing span:nth-child(3) { animation-delay: .3s; }
+@keyframes waIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+@keyframes waDot { 0%, 60%, 100% { opacity: .35; transform: none; } 30% { opacity: 1; transform: translateY(-3px); } }
+@media (prefers-reduced-motion: reduce) { .wa-msg, .wa-typing { animation: none; } }

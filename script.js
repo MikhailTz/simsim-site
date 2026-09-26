@@ -66,3 +66,77 @@ document.querySelectorAll('[data-checkout]').forEach((btn) => {
     window.open(fallbackHref, '_blank', 'noopener');
   });
 });
+
+// Conversa animada de WhatsApp da Home (seção #whatsapp-demo): mensagem do
+// cliente, "digitando…" e resposta da loja, uma de cada vez, em loop. Só
+// começa quando a seção aparece na tela; com "reduzir movimento" ligado no
+// sistema, mostra a conversa inteira parada.
+(function () {
+  const chat = document.getElementById('waChat');
+  if (!chat) return;
+  const status = document.getElementById('waStatus');
+  const CONVERSA = [
+    { de: 'out', texto: 'Oi, boa noite! 😊' },
+    { de: 'in', texto: 'Olá! Seja bem-vindo à Sua Loja 👋 Quer dar uma olhada no cardápio?', botao: 'Ver cardápio' },
+    { de: 'out', texto: 'Quero 2 cheeseburgers e uma coca' },
+    { de: 'in', texto: 'Anotado! 🍔 2x Cheeseburger e 1x Coca-Cola. Total: R$ 46,00. É pra entrega ou retirada?' },
+    { de: 'out', texto: 'Entrega' },
+    { de: 'in', texto: 'Pedido confirmado! ✅ Chega em uns 40 minutos. Pode pagar no Pix online, com taxa 0%.', botao: 'Acompanhar pedido' },
+  ];
+  const hora = () => new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+  const esperar = (ms) => new Promise((r) => setTimeout(r, ms));
+
+  function balao(msg) {
+    const el = document.createElement('div');
+    el.className = 'wa-msg ' + msg.de;
+    el.textContent = msg.texto;
+    if (msg.botao) {
+      const b = document.createElement('span');
+      b.className = 'wa-btn';
+      b.textContent = msg.botao;
+      el.appendChild(b);
+    }
+    const t = document.createElement('time');
+    t.textContent = hora();
+    el.appendChild(t);
+    chat.appendChild(el);
+    while (chat.children.length > 7) chat.removeChild(chat.firstChild);
+  }
+
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    CONVERSA.forEach(balao);
+    return;
+  }
+
+  async function rodar() {
+    for (;;) {
+      chat.innerHTML = '';
+      await esperar(700);
+      for (const msg of CONVERSA) {
+        if (msg.de === 'in') {
+          const digitando = document.createElement('div');
+          digitando.className = 'wa-typing';
+          digitando.innerHTML = '<span></span><span></span><span></span>';
+          chat.appendChild(digitando);
+          if (status) status.textContent = 'digitando…';
+          await esperar(1300);
+          digitando.remove();
+          if (status) status.textContent = 'online';
+        } else {
+          await esperar(900);
+        }
+        balao(msg);
+        await esperar(msg.de === 'in' ? 1600 : 600);
+      }
+      await esperar(3500);
+    }
+  }
+
+  const observador = new IntersectionObserver((entradas) => {
+    if (entradas.some((e) => e.isIntersecting)) {
+      observador.disconnect();
+      rodar();
+    }
+  }, { threshold: 0.3 });
+  observador.observe(chat);
+})();
