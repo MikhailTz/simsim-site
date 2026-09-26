@@ -76,6 +76,7 @@ document.querySelectorAll('[data-checkout]').forEach((btn) => {
 (function () {
   const chat = document.getElementById('waChat');
   if (!chat) return;
+  const corpo = document.getElementById('waBody');
   const status = document.getElementById('waStatus');
   const waScreen = document.getElementById('waScreen');
   const trackScreen = document.getElementById('trackScreen');
@@ -97,8 +98,8 @@ document.querySelectorAll('[data-checkout]').forEach((btn) => {
         { de: 'in', texto: 'Estamos abertos agora! 🟢 Funcionamos até 22:00.', card: 'horarios' },
         { de: 'out', texto: 'Qual o endereço de vocês?' },
         { de: 'in', texto: 'Aqui está nossa localização 📍', card: 'local' },
-        { de: 'out', texto: 'Quanto fica a entrega pro Centro?' },
-        { de: 'in', texto: 'Pro Centro a taxa de entrega fica R$ 6,00 🛵 Chega em 30 a 40 minutos.' },
+        { de: 'out', texto: 'Quanto fica a entrega pra Rua das Palmeiras?' },
+        { de: 'in', texto: 'Pra Rua das Palmeiras a taxa de entrega fica R$ 6,00 🛵 Chega em 30 a 40 minutos.' },
         { de: 'out', texto: 'Aceita Pix?' },
         { de: 'in', texto: 'Aceitamos: Pix, Pix online (taxa 0%), Cartão de crédito, Dinheiro.' },
         { de: 'out', texto: 'Tem pedido mínimo?' },
@@ -106,21 +107,22 @@ document.querySelectorAll('[data-checkout]').forEach((btn) => {
       ],
     },
     pedido: {
-      legenda: 'O cliente faz o pedido conversando normalmente no WhatsApp',
+      legenda: 'O pedido é anotado sozinho e a loja só confere antes de aceitar',
       passos: [
         { de: 'out', texto: 'Oi, boa noite! 😊' },
         { de: 'in', texto: 'Olá! Seja bem-vindo à Sua Loja 👋 Quer dar uma olhada no cardápio?', botoes: ['📖 Ver cardápio'] },
-        { de: 'out', texto: 'Quero 2 cheeseburgers e uma coca' },
-        { de: 'in', texto: 'Anotado! 🍔 2x Cheeseburger e 1x Coca-Cola. Total: R$ 46,00. É pra entrega ou retirada?' },
-        { de: 'out', texto: 'Entrega' },
-        { de: 'in', texto: 'Pedido confirmado! ✅ Chega em uns 40 minutos. Pode pagar no Pix online, com taxa 0%.', botoes: ['🛵 Acompanhar pedido'] },
+        { de: 'out', texto: 'Quero 2 cheeseburgers e uma coca, pra entregar na Rua das Palmeiras, 80' },
+        { de: 'in', texto: 'Seu pedido foi anotado! ✍️\n2x Cheeseburger e 1x Coca-Cola 2L, total R$ 58,00 com a entrega.\nSó aguardando um atendente conferir antes de ser aceito 🙏' },
+        { de: 'in', pausa: 2200, texto: 'Olá, Maria! Seu pedido foi confirmado e será preparado para entrega em breve 🥰', botoes: ['📦 Ver status'] },
+        { de: 'out', texto: 'Obrigada! 😍' },
       ],
     },
     confirmado: {
-      legenda: 'Resumo completo do pedido, com endereço, valores e pagamento',
+      legenda: 'O cliente acompanha o pedido e recebe o resumo completo, com endereço e pagamento',
       passos: [
-        { de: 'in', texto: 'Olá, Maria! Recebemos seu pedido B-4676 e logo ele será aceito pela loja. 🙏', botoes: ['📄 Ver detalhes'] },
-        { de: 'in', texto: 'Olá, Maria! Seu pedido foi confirmado e será preparado para entrega em breve 🥰\n---\n*Produtos*\n*2x Cheeseburger*   R$ 40,00\n*1x Coca-Cola 2L*   R$ 12,00\n---\nR$ 52,00 Total dos produtos\nR$ 6,00 Taxa de entrega\n*R$ 58,00 Total*\nForma de pagamento: Pix\n---\nBairro: Centro\nRua: Rua das Flores, 120\nObrigado pela preferência 😉\nPedido B-4676', botoes: ['📦 Ver status'] },
+        { de: 'out', texto: 'Oi! Quero acompanhar o pedido B-4676' },
+        { de: 'in', texto: 'Oi, Maria! Segue o link pra você acompanhar os detalhes e o status do seu pedido B-4676:', botoes: ['📦 Ver status'] },
+        { de: 'in', texto: 'Olá, Maria! Seu pedido foi confirmado e será preparado para entrega em breve 🥰\n---\n*Produtos*\n*2x Cheeseburger*   R$ 40,00\n*1x Coca-Cola 2L*   R$ 12,00\n---\nR$ 52,00 Total dos produtos\nR$ 6,00 Taxa de entrega\n*R$ 58,00 Total*\nForma de pagamento: Pix\n---\nBairro: Centro\nRua: Rua das Palmeiras, 80\nObrigado pela preferência 😉\nPedido B-4676' },
         { de: 'out', texto: 'Paguei!', card: 'comprovante' },
         { de: 'in', texto: 'Recebemos a confirmação do pagamento de R$ 58,00 do seu pedido B-4676, tudo quitado, obrigado! 🙏' },
       ],
@@ -139,10 +141,13 @@ document.querySelectorAll('[data-checkout]').forEach((btn) => {
       ],
     },
     retirada: {
-      legenda: 'Sem motoboy disponível? O pedido vira retirada e o valor é ajustado sozinho',
+      legenda: 'O cliente prefere buscar? O pedido vira retirada e o valor é ajustado sozinho',
       passos: [
         { de: 'in', texto: 'Olá, Maria! Seu pedido foi confirmado e será preparado para entrega em breve 🥰', botoes: ['📦 Ver status'] },
-        { de: 'in', texto: 'Seu pedido B-4702 foi ajustado pra retirada na loja e já está pronto pra você buscar! 🎉\nTaxa de entrega removida, novo valor total: R$ 52,00.', card: 'local' },
+        { de: 'out', texto: 'Posso buscar meu pedido aí na loja?' },
+        { de: 'in', texto: 'Pode sim! 😊 Já vou ajustar seu pedido pra retirada.' },
+        { de: 'in', texto: 'Seu pedido B-4702 foi ajustado pra retirada na loja e já está pronto pra você buscar! 🎉\nTaxa de entrega removida, novo valor total: R$ 52,00.' },
+        { de: 'in', texto: 'Aqui está nossa localização 📍', card: 'local' },
         { de: 'out', texto: 'Beleza, passo aí em 10 minutos 👍' },
       ],
     },
@@ -153,11 +158,12 @@ document.querySelectorAll('[data-checkout]').forEach((btn) => {
   let execucao = 0;
   const esperar = (ms, id) => new Promise((resolve, reject) => setTimeout(() => (id === execucao ? resolve() : reject()), ms));
 
-  function mostrarChat() {
+  function mostrarChat(limpar = true) {
     trackScreen.hidden = true;
     waScreen.hidden = false;
-    chat.innerHTML = '';
+    if (limpar) chat.innerHTML = '';
     if (status) status.textContent = 'online';
+    corpo.scrollTop = corpo.scrollHeight;
   }
 
   function card(tipo) {
@@ -205,10 +211,12 @@ document.querySelectorAll('[data-checkout]').forEach((btn) => {
     t.textContent = hora();
     el.appendChild(t);
     chat.appendChild(el);
-    // Com a conversa alinhada por baixo, o que passa do topo não entra no
-    // scrollHeight; soma as alturas e tira as mensagens mais antigas.
-    const altura = () => [...chat.children].reduce((s, c) => s + c.offsetHeight + 6, 0);
-    while (altura() > chat.clientHeight - 20 && chat.children.length > 1) chat.removeChild(chat.firstChild);
+    rolarProFim();
+  }
+
+  // Mantém o histórico: a conversa sobe e a tela acompanha a última mensagem.
+  function rolarProFim() {
+    corpo.scrollTo({ top: corpo.scrollHeight, behavior: reduzido ? 'auto' : 'smooth' });
   }
 
   // Motoboy anda pelo trajeto tracejado do mapa até a casa do cliente.
@@ -270,7 +278,7 @@ document.querySelectorAll('[data-checkout]').forEach((btn) => {
             if (alvo) alvo.classList.add('tap');
             await esperar(1100, id);
           } else if (passo.voltar) {
-            mostrarChat();
+            mostrarChat(false);
             await esperar(500, id);
           } else if (passo.track) {
             mostrarStatus();
@@ -281,7 +289,9 @@ document.querySelectorAll('[data-checkout]').forEach((btn) => {
             const digitando = document.createElement('div');
             digitando.className = 'wa-typing';
             digitando.innerHTML = '<span></span><span></span><span></span>';
+            if (passo.pausa) await esperar(passo.pausa, id);
             chat.appendChild(digitando);
+            rolarProFim();
             if (status) status.textContent = 'digitando…';
             await esperar(1200, id);
             digitando.remove();
