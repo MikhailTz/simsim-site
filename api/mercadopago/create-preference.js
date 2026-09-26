@@ -17,8 +17,8 @@
 const SUPABASE_URL = 'https://syewayifxwinkcatuewd.supabase.co';
 
 const PLANS = {
-  bot: { title: 'SimSim Bot: assinatura mensal', price: 300 },
-  ia: { title: 'SimSim IA: assinatura mensal', price: 400 },
+  bot: { title: 'SimSim Bot: assinatura mensal', price: 250 },
+  ia: { title: 'SimSim IA: assinatura mensal', price: 350 },
 };
 
 async function getMercadoPagoAccessToken() {
