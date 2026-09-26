@@ -83,7 +83,28 @@ document.querySelectorAll('[data-checkout]').forEach((btn) => {
   const caption = document.getElementById('demoCaption');
   const tabs = document.querySelectorAll('.demo-tab');
 
+  // Textos iguais aos padrões das mensagens automáticas do sistema
+  // (lib/messageTemplates.ts e orderStatusMessages.ts no simsim-app).
+  // "card" desenha um cartão dentro do balão: local (pino no mapa),
+  // horarios (tabela da semana) ou comprovante (Pix).
   const DEMOS = {
+    atendimento: {
+      legenda: 'Respostas automáticas pras perguntas mais comuns, a qualquer hora',
+      passos: [
+        { de: 'out', texto: 'Oi, boa tarde! Quero o cardápio' },
+        { de: 'in', texto: 'Boa tarde, Maria! Que bom te ver por aqui 😊 Esse é o cardápio completo da Sua Loja. Pra fazer seu pedido, é só escolher os itens direto por lá:', botoes: ['📖 Ver cardápio'] },
+        { de: 'out', texto: 'Vocês estão abertos?' },
+        { de: 'in', texto: 'Estamos abertos agora! 🟢 Funcionamos até 22:00.', card: 'horarios' },
+        { de: 'out', texto: 'Qual o endereço de vocês?' },
+        { de: 'in', texto: 'Aqui está nossa localização 📍', card: 'local' },
+        { de: 'out', texto: 'Quanto fica a entrega pro Centro?' },
+        { de: 'in', texto: 'Pro Centro a taxa de entrega fica R$ 6,00 🛵 Chega em 30 a 40 minutos.' },
+        { de: 'out', texto: 'Aceita Pix?' },
+        { de: 'in', texto: 'Aceitamos: Pix, Pix online (taxa 0%), Cartão de crédito, Dinheiro.' },
+        { de: 'out', texto: 'Tem pedido mínimo?' },
+        { de: 'in', texto: 'O pedido mínimo é R$ 30,00.' },
+      ],
+    },
     pedido: {
       legenda: 'O cliente faz o pedido conversando normalmente no WhatsApp',
       passos: [
@@ -95,30 +116,34 @@ document.querySelectorAll('[data-checkout]').forEach((btn) => {
         { de: 'in', texto: 'Pedido confirmado! ✅ Chega em uns 40 minutos. Pode pagar no Pix online, com taxa 0%.', botoes: ['🛵 Acompanhar pedido'] },
       ],
     },
-    automaticas: {
-      legenda: 'Mensagens automáticas com botões interativos',
+    confirmado: {
+      legenda: 'Resumo completo do pedido, com endereço, valores e pagamento',
       passos: [
-        { de: 'out', texto: 'Cardápio' },
-        { de: 'in', texto: 'O cardápio está disponível no link a seguir. Se precisar de ajuda para escolher algo ou tiver alguma dúvida, é só chamar!', botoes: ['📖 Ver cardápio'] },
-        { de: 'in', texto: 'Olá, Maria! Recebemos seu pedido B-4676 para amanhã, 14:00 às 15:00, e logo ele será aceito pela loja. 🙏', botoes: ['📄 Ver detalhes'] },
+        { de: 'in', texto: 'Olá, Maria! Recebemos seu pedido B-4676 e logo ele será aceito pela loja. 🙏', botoes: ['📄 Ver detalhes'] },
+        { de: 'in', texto: 'Olá, Maria! Seu pedido foi confirmado e será preparado para entrega em breve 🥰\n---\n*Produtos*\n*2x Cheeseburger*   R$ 40,00\n*1x Coca-Cola 2L*   R$ 12,00\n---\nR$ 52,00 Total dos produtos\nR$ 6,00 Taxa de entrega\n*R$ 58,00 Total*\nForma de pagamento: Pix\n---\nBairro: Centro\nRua: Rua das Flores, 120\nObrigado pela preferência 😉\nPedido B-4676', botoes: ['📦 Ver status'] },
+        { de: 'out', texto: 'Paguei!', card: 'comprovante' },
+        { de: 'in', texto: 'Recebemos a confirmação do pagamento de R$ 58,00 do seu pedido B-4676, tudo quitado, obrigado! 🙏' },
       ],
     },
     entrega: {
-      legenda: 'Botões pra acompanhar a entrega e um mapa em tempo real',
+      legenda: 'Cada etapa avisada no WhatsApp, com o mapa da entrega em tempo real',
       passos: [
-        { de: 'out', texto: 'Meu pedido já está vindo?' },
+        { de: 'in', texto: 'Seu pedido B-4598 está sendo preparado agora! 👨‍🍳' },
         { de: 'in', texto: 'Seu pedido B-4598 está pronto e já vai sair pra entrega. 🎉' },
         { de: 'in', texto: 'Seu pedido B-4598 saiu para entrega com o entregador Carlos! 🛵', botoes: ['📍 Acompanhar pedido', '📷 Seguir no Instagram'] },
         { tap: '📍 Acompanhar pedido' },
         { track: true },
-      ],
-    },
-    avaliacao: {
-      legenda: 'Depois da entrega, o cliente é convidado a avaliar a loja',
-      passos: [
+        { voltar: true },
         { de: 'in', texto: 'Seu pedido B-4598 foi concluído. Obrigado pela preferência! 🙏' },
         { de: 'in', texto: 'Se puder, deixa sua avaliação pra gente, ajuda muito!', botoes: ['⭐ Deixar avaliação'] },
-        { de: 'out', texto: 'Tava tudo ótimo, obrigado! 😋' },
+      ],
+    },
+    retirada: {
+      legenda: 'Sem motoboy disponível? O pedido vira retirada e o valor é ajustado sozinho',
+      passos: [
+        { de: 'in', texto: 'Olá, Maria! Seu pedido foi confirmado e será preparado para entrega em breve 🥰', botoes: ['📦 Ver status'] },
+        { de: 'in', texto: 'Seu pedido B-4702 foi ajustado pra retirada na loja e já está pronto pra você buscar! 🎉\nTaxa de entrega removida, novo valor total: R$ 52,00.', card: 'local' },
+        { de: 'out', texto: 'Beleza, passo aí em 10 minutos 👍' },
       ],
     },
   };
@@ -135,14 +160,45 @@ document.querySelectorAll('[data-checkout]').forEach((btn) => {
     if (status) status.textContent = 'online';
   }
 
+  function card(tipo) {
+    const el = document.createElement('span');
+    if (tipo === 'local') {
+      el.innerHTML = '<span class="wa-card-map"></span><span class="wa-card-title">Sua Loja</span><span class="wa-card-sub">Rua do Comércio, 45, Centro</span>';
+    } else if (tipo === 'horarios') {
+      el.className = 'wa-hours';
+      [['Seg a Sex', '11:00 às 22:00'], ['Sábado', '11:00 às 23:00'], ['Domingo', '17:00 às 22:00']].forEach(([d, h]) => {
+        el.insertAdjacentHTML('beforeend', '<span>' + d + '</span><span>' + h + '</span>');
+      });
+    } else if (tipo === 'comprovante') {
+      el.className = 'wa-receipt';
+      el.innerHTML = '<small>Comprovante Pix</small><b>R$ 58,00</b><small>Para: Sua Loja</small>';
+    }
+    return el;
+  }
+
+  // Texto com *negrito* (como no WhatsApp) e linhas "---" viram separador.
+  function texto(el, conteudo) {
+    conteudo.split('\n').forEach((linha, i, linhas) => {
+      if (linha === '---') { const sep = document.createElement('span'); sep.className = 'wa-sep'; el.appendChild(sep); return; }
+      linha.split('*').forEach((parte, k) => {
+        if (!parte) return;
+        if (k % 2) { const b = document.createElement('b'); b.textContent = parte; el.appendChild(b); }
+        else el.appendChild(document.createTextNode(parte));
+      });
+      if (i < linhas.length - 1 && linhas[i + 1] !== '---') el.appendChild(document.createTextNode('\n'));
+    });
+  }
+
   function balao(msg) {
     const el = document.createElement('div');
     el.className = 'wa-msg ' + msg.de;
-    el.appendChild(document.createTextNode(msg.texto));
-    (msg.botoes || []).forEach((texto) => {
+    if (msg.card === 'local' || msg.card === 'comprovante') el.appendChild(card(msg.card));
+    texto(el, msg.texto);
+    if (msg.card === 'horarios') el.appendChild(card(msg.card));
+    (msg.botoes || []).forEach((t) => {
       const b = document.createElement('span');
       b.className = 'wa-btn';
-      b.textContent = texto;
+      b.textContent = t;
       el.appendChild(b);
     });
     const t = document.createElement('time');
@@ -151,7 +207,7 @@ document.querySelectorAll('[data-checkout]').forEach((btn) => {
     chat.appendChild(el);
     // Com a conversa alinhada por baixo, o que passa do topo não entra no
     // scrollHeight; soma as alturas e tira as mensagens mais antigas.
-    const altura = () => [...chat.children].reduce((t, c) => t + c.offsetHeight + 6, 0);
+    const altura = () => [...chat.children].reduce((s, c) => s + c.offsetHeight + 6, 0);
     while (altura() > chat.clientHeight - 20 && chat.children.length > 1) chat.removeChild(chat.firstChild);
   }
 
@@ -213,6 +269,9 @@ document.querySelectorAll('[data-checkout]').forEach((btn) => {
             const alvo = [...chat.querySelectorAll('.wa-btn')].find((b) => b.textContent === passo.tap);
             if (alvo) alvo.classList.add('tap');
             await esperar(1100, id);
+          } else if (passo.voltar) {
+            mostrarChat();
+            await esperar(500, id);
           } else if (passo.track) {
             mostrarStatus();
             await esperar(600, id);
@@ -242,7 +301,7 @@ document.querySelectorAll('[data-checkout]').forEach((btn) => {
     }
   }
 
-  let atual = 'pedido';
+  let atual = 'atendimento';
   let visivel = false;
   tabs.forEach((tab) => {
     tab.addEventListener('click', () => {
