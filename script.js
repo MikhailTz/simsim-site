@@ -30,6 +30,16 @@ const ICONS = {
   shield: '<path d="M12 3l7 3v6c0 5-3.5 8-7 9-3.5-1-7-4-7-9V6l7-3Z"/><polyline points="9 12 11 14 15 9.5"/>',
   check: '<circle cx="12" cy="12" r="9"/><polyline points="8 12.5 11 15.5 16 9"/>',
   route: '<circle cx="6" cy="6" r="2.3"/><circle cx="18" cy="18" r="2.3"/><path d="M6 8.3V13a4 4 0 0 0 4 4h4"/>',
+  bell: '<path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15L6 16Z"/><path d="M10 20.5a2 2 0 0 0 4 0"/>',
+  moon: '<path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z"/>',
+  star: '<path d="M12 3.5l2.6 5.3 5.8.8-4.2 4.1 1 5.8L12 16.8l-5.2 2.7 1-5.8-4.2-4.1 5.8-.8Z"/>',
+  bolt: '<path d="M13 2.5 5 13.5h6l-1 8 8-11h-6Z"/>',
+  printer: '<path d="M7 8V3.5h10V8"/><rect x="3.5" y="8" width="17" height="8" rx="2"/><rect x="7" y="13" width="10" height="7.5" rx="1"/>',
+  download: '<path d="M12 3v12"/><polyline points="7.5 10.5 12 15 16.5 10.5"/><path d="M4 15v4a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-4"/>',
+  map: '<path d="M9 4 3.5 6v14L9 18l6 2 5.5-2V4L15 6Z"/><line x1="9" y1="4" x2="9" y2="18"/><line x1="15" y1="6" x2="15" y2="20"/>',
+  phone: '<rect x="6.5" y="2.5" width="11" height="19" rx="2.5"/><line x1="10.5" y1="18.5" x2="13.5" y2="18.5"/>',
+  store: '<path d="M4 9.5 5.5 4h13L20 9.5"/><path d="M4 9.5a2.7 2.7 0 0 0 5.3 0 2.7 2.7 0 0 0 5.4 0 2.7 2.7 0 0 0 5.3 0"/><path d="M5 12v8.5h14V12"/><path d="M10 20.5v-5h4v5"/>',
+  pix: '<path d="M12 2.8 21.2 12 12 21.2 2.8 12Z"/><path d="M8.5 12h7"/>',
   phoneOff: '<path d="M10.68 13.31a16 16 0 0 0 3.41 2.6l1.27-1.27a2 2 0 0 1 2.11-.45c.84.32 1.72.55 2.63.65A2 2 0 0 1 22 16.92V19a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-6.53-1.75"/><path d="M9.09 9.09A16 16 0 0 1 6.5 4.63 2 2 0 0 1 8.5 2h2.09a2 2 0 0 1 2 1.72c.11.9.34 1.78.65 2.62"/><line x1="1" y1="1" x2="23" y2="23"/>',
 };
 document.querySelectorAll('[data-icon]').forEach((el) => {
@@ -553,3 +563,22 @@ function iniciarDemo(root) {
   observador.observe(chat);
 }
 document.querySelectorAll('[data-demo-root]').forEach(iniciarDemo);
+
+// Entrada animada dos blocos marcados com data-reveal (Funcionalidades e
+// Planos): aparecem subindo, um depois do outro, conforme a página rola.
+// Sem suporte ou com "reduzir movimento", ficam visíveis direto.
+(function () {
+  const itens = document.querySelectorAll('[data-reveal]');
+  if (!itens.length) return;
+  if (!('IntersectionObserver' in window) || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    itens.forEach((el) => el.classList.add('in'));
+    return;
+  }
+  document.documentElement.classList.add('reveal-on');
+  const obs = new IntersectionObserver((entradas) => {
+    entradas.forEach((e) => {
+      if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+  itens.forEach((el) => obs.observe(el));
+})();

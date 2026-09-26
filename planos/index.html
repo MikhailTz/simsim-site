@@ -33,52 +33,65 @@
       <div class="container hero-stack">
         <span class="eyebrow-dark">Planos</span>
         <h1>Dois planos. <span class="highlight">Você escolhe o nível de automação.</span></h1>
-        <p class="hero-copy">Assinatura paga direto pelo site, sem burocracia. Os dois planos incluem cardápio digital, gestão de pedidos, entregas e pagamentos, a diferença é o quanto a inteligência artificial assume o atendimento.</p>
+        <p class="hero-copy">Assinatura paga direto pelo site, sem burocracia. Os dois planos têm o sistema completo de pedidos, entregas e pagamentos. A diferença é quem conversa com o seu cliente no WhatsApp.</p>
       </div>
     </section>
 
-    <section class="section" style="padding-top:0">
+    <section class="section">
       <div class="container">
         <div class="plans-grid">
           <div class="plan-card" data-plan="bot">
             <span class="plan-tag">Bot</span>
             <h3>SimSim Bot</h3>
-            <p class="plan-desc">Cardápio, pedidos e respostas automáticas por menu no WhatsApp, sem inteligência artificial.</p>
+            <p class="plan-desc">Todo o sistema de pedidos e entregas, com respostas automáticas no WhatsApp por palavra-chave e botões.</p>
             <div class="plan-price"><span class="amount">R$ 300</span><span class="cycle">/mês</span></div>
             <p class="plan-price-note">Sem multa de cancelamento</p>
-            <ul class="plan-features">
-              <li>Cardápio digital e checkout próprio</li>
-              <li>Implantação do cardápio sem custo</li>
-              <li>Gestão de pedidos e entregas (Gestor de Pedidos)</li>
-              <li>Respostas automáticas por menu no WhatsApp (sem IA)</li>
-              <li>Anota o pedido automaticamente a partir do menu</li>
-              <li>Pagamento a prazo com cobrança automática</li>
-              <li>Pagamento online opcional, sem taxa extra do SimSim</li>
-              <li>Rastreamento de entrega em tempo real</li>
-            </ul>
+            <div class="plan-ideal">
+              <b>Ideal para</b>
+              <p>Restaurantes com clientes que já estão acostumados a pedir online: recebem o link, abrem o cardápio, escolhem e finalizam sozinhos, sem precisar de muita conversa.</p>
+            </div>
             <!-- TODO: trocar por link de checkout (Mercado Pago/InfinitePay) -->
             <a class="btn btn-primary" data-checkout="bot" href="https://wa.me/5521970656726?text=Ol%C3%A1%2C%20quero%20assinar%20o%20plano%20SimSim%20Bot%20(R%24%20300%2Fm%C3%AAs)." target="_blank" rel="noopener">Assinar agora</a>
           </div>
           <div class="plan-card featured" data-plan="ia">
             <span class="plan-tag">Mais completo</span>
             <h3>SimSim IA</h3>
-            <p class="plan-desc">Tudo do plano Bot, com atendimento por inteligência artificial que conversa, sugere e fecha o pedido sozinho.</p>
+            <p class="plan-desc">Tudo do plano Bot, com uma inteligência artificial que conversa como um atendente, tira dúvidas e fecha o pedido pelo WhatsApp.</p>
             <div class="plan-price"><span class="amount">R$ 400</span><span class="cycle">/mês</span></div>
             <p class="plan-price-note">Sem multa de cancelamento</p>
-            <ul class="plan-features">
-              <li>Tudo do plano SimSim Bot</li>
-              <li>Atendimento por inteligência artificial no WhatsApp</li>
-              <li>Entende linguagem natural, não só menu fixo</li>
-              <li>Anota o pedido conversando normalmente com o cliente</li>
-              <li>Recebe e responde mensagens de áudio</li>
-              <li>Consulta o cardápio e tira dúvidas sozinha</li>
-              <li>Sugere produtos e ajuda a fechar a venda</li>
-              <li>Encaminha para humano quando necessário</li>
-              <li>Prioridade no suporte</li>
-            </ul>
+            <div class="plan-ideal">
+              <b>Ideal para</b>
+              <p>Quem tem clientes que preferem conversar, fazem muitas perguntas ou têm dificuldade com o cardápio digital. A IA atende com paciência, entende o que o cliente escreve ou fala em áudio e anota o pedido pela própria conversa.</p>
+            </div>
             <!-- TODO: trocar por link de checkout (Mercado Pago/InfinitePay) -->
             <a class="btn btn-primary" data-checkout="ia" href="https://wa.me/5521970656726?text=Ol%C3%A1%2C%20quero%20assinar%20o%20plano%20SimSim%20IA%20(R%24%20400%2Fm%C3%AAs)." target="_blank" rel="noopener">Assinar agora</a>
           </div>
+        </div>
+
+        <div class="compare">
+          <div class="section-head center" data-reveal><span class="eyebrow">Comparativo</span><h2>O que muda <span class="highlight">de um plano pro outro.</span></h2><p>Os dois têm o sistema completo. A diferença está em quem conversa com o cliente no WhatsApp.</p></div>
+          <table class="compare-table">
+            <thead><tr><th scope="col"></th><th scope="col">SimSim Bot<small>R$ 300/mês</small></th><th scope="col" class="hl">SimSim IA<small>R$ 400/mês</small></th></tr></thead>
+            <tbody>
+              <tr class="group"><th colspan="3">Nos dois planos</th></tr>
+              <tr data-reveal style="--d:0ms"><th scope="row">Cardápio digital e checkout próprio</th><td class="yes" aria-label="Incluso">✓</td><td class="yes" aria-label="Incluso">✓</td></tr>
+              <tr data-reveal style="--d:40ms"><th scope="row">Implantação do cardápio sem custo</th><td class="yes" aria-label="Incluso">✓</td><td class="yes" aria-label="Incluso">✓</td></tr>
+              <tr data-reveal style="--d:80ms"><th scope="row">Gestor de Pedidos, aceite e impressão automáticos</th><td class="yes" aria-label="Incluso">✓</td><td class="yes" aria-label="Incluso">✓</td></tr>
+              <tr data-reveal style="--d:120ms"><th scope="row">Respostas automáticas: cardápio, horário, localização, pagamento</th><td class="yes" aria-label="Incluso">✓</td><td class="yes" aria-label="Incluso">✓</td></tr>
+              <tr data-reveal style="--d:160ms"><th scope="row">Mensagens com botões: pedido recebido, saiu pra entrega, avaliação</th><td class="yes" aria-label="Incluso">✓</td><td class="yes" aria-label="Incluso">✓</td></tr>
+              <tr data-reveal style="--d:200ms"><th scope="row">Roteirização de entregas e app do entregador</th><td class="yes" aria-label="Incluso">✓</td><td class="yes" aria-label="Incluso">✓</td></tr>
+              <tr data-reveal style="--d:240ms"><th scope="row">Rastreamento da entrega em tempo real</th><td class="yes" aria-label="Incluso">✓</td><td class="yes" aria-label="Incluso">✓</td></tr>
+              <tr data-reveal style="--d:280ms"><th scope="row">Pix online com taxa 0% e pagamento online opcional</th><td class="yes" aria-label="Incluso">✓</td><td class="yes" aria-label="Incluso">✓</td></tr>
+              <tr data-reveal style="--d:320ms"><th scope="row">Pagamento a prazo e exportação de contatos</th><td class="yes" aria-label="Incluso">✓</td><td class="yes" aria-label="Incluso">✓</td></tr>
+              <tr class="group"><th colspan="3">Só no SimSim IA</th></tr>
+              <tr data-reveal style="--d:0ms"><th scope="row">Conversa em linguagem natural, do jeito que o cliente escrever</th><td class="no" aria-label="Não incluso">✕</td><td class="yes" aria-label="Incluso">✓</td></tr>
+              <tr data-reveal style="--d:40ms"><th scope="row">Anota o pedido pela conversa, sem o cliente precisar abrir o cardápio</th><td class="no" aria-label="Não incluso">✕</td><td class="yes" aria-label="Incluso">✓</td></tr>
+              <tr data-reveal style="--d:80ms"><th scope="row">Entende e responde mensagens de áudio</th><td class="no" aria-label="Não incluso">✕</td><td class="yes" aria-label="Incluso">✓</td></tr>
+              <tr data-reveal style="--d:120ms"><th scope="row">Tira dúvidas sobre os produtos e sugere itens pra fechar a venda</th><td class="no" aria-label="Não incluso">✕</td><td class="yes" aria-label="Incluso">✓</td></tr>
+              <tr data-reveal style="--d:160ms"><th scope="row">Chama um atendente da loja quando precisa</th><td class="no" aria-label="Não incluso">✕</td><td class="yes" aria-label="Incluso">✓</td></tr>
+              <tr data-reveal style="--d:200ms"><th scope="row">Prioridade no suporte</th><td class="no" aria-label="Não incluso">✕</td><td class="yes" aria-label="Incluso">✓</td></tr>
+            </tbody>
+          </table>
         </div>
         <div class="trust-strip" style="justify-content:center;margin-top:30px">
           <span class="trust-item">✓ Sem multa de cancelamento</span>
