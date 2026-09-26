@@ -614,9 +614,21 @@ document.querySelectorAll('[data-demo-root]').forEach(iniciarDemo);
     ativo = i;
     cols.forEach((c, k) => c.classList.toggle('active', k === i));
   }
+  let animacao = 0;
   function ir(i, suave = true) {
     const alvo = cols[(i + cols.length) % cols.length];
-    row.scrollTo({ left: alvo.offsetLeft - (row.clientWidth - alvo.offsetWidth) / 2, behavior: suave ? 'smooth' : 'auto' });
+    const destino = alvo.offsetLeft - (row.clientWidth - alvo.offsetWidth) / 2;
+    cancelAnimationFrame(animacao);
+    if (!suave) { row.scrollLeft = destino; return; }
+    // Troca rápida (~400ms) em vez do scroll suave padrão do navegador, que é lento.
+    const inicio = row.scrollLeft, dist = destino - inicio, t0 = performance.now(), dur = 400;
+    row.style.scrollSnapType = 'none';
+    const passo = (t) => {
+      const p = Math.min(1, (t - t0) / dur);
+      row.scrollLeft = inicio + dist * (p < 0.5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2);
+      if (p < 1) animacao = requestAnimationFrame(passo); else row.style.scrollSnapType = '';
+    };
+    animacao = requestAnimationFrame(passo);
   }
   let quadro = 0;
   row.addEventListener('scroll', () => {
@@ -630,7 +642,7 @@ document.querySelectorAll('[data-demo-root]').forEach(iniciarDemo);
       if (perto !== ativo) marcar(perto);
     });
   }, { passive: true });
-  const segurar = () => { pausaAte = Date.now() + 8000; };
+  const segurar = () => { cancelAnimationFrame(animacao); row.style.scrollSnapType = ''; pausaAte = Date.now() + 8000; };
   row.addEventListener('touchstart', segurar, { passive: true });
   nav.querySelectorAll('.device-arrow').forEach((b) => b.addEventListener('click', () => { segurar(); ir(ativo + Number(b.dataset.dir)); }));
   new IntersectionObserver((e) => { naTela = e.some((x) => x.isIntersecting); }, { threshold: 0.3 }).observe(row);
@@ -641,7 +653,7 @@ document.querySelectorAll('[data-demo-root]').forEach(iniciarDemo);
   if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     setInterval(() => {
       if (carrossel() && naTela && !document.hidden && Date.now() > pausaAte) ir(ativo + 1);
-    }, 3500);
+    }, 2500);
   }
 })();
 
