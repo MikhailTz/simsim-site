@@ -286,6 +286,8 @@ footer a:hover { color: var(--orange-light); }
 .demo-tab { padding: 9px 16px; border-radius: 999px; border: 1.5px solid var(--line); background: var(--bg); color: var(--muted); font: inherit; font-size: .84rem; font-weight: 700; cursor: pointer; transition: .2s; }
 .demo-tab:hover { border-color: var(--orange); color: var(--orange-deep); }
 .demo-tab.active { background: var(--ink); border-color: var(--ink); color: #fff; }
+.demo-tab .t-short { display: none; }
+@media (max-width: 640px) { .demo-tab .t-full { display: none; } .demo-tab .t-short { display: inline; } }
 .demo-caption { text-align: center; margin: 0 auto 16px; max-width: 520px; color: var(--muted); font-size: .92rem; font-weight: 600; min-height: 1.4em; }
 .wa-demo { --wa-h: 440px; width: 300px; margin: 0 auto; touch-action: pan-y; }
 .wa-demo .phone-frame { background: #efeae2; position: relative; }
@@ -344,13 +346,14 @@ footer a:hover { color: var(--orange-light); }
    o celular encolhe pra caber inteiro na tela junto com as abas e a
    legenda, sem precisar rolar pra trocar de exemplo. */
 @media (max-width: 640px) {
-  #whatsapp-demo .section-head { margin-bottom: 22px; }
-  #whatsapp-demo .section-head p { font-size: .92rem; margin-top: 10px; }
-  .demo-tabs { flex-wrap: nowrap; justify-content: flex-start; overflow-x: auto; scrollbar-width: none; scroll-snap-type: x proximity; margin: 0 -16px 12px; padding: 2px 16px; gap: 6px; }
-  .demo-tabs::-webkit-scrollbar { display: none; }
-  .demo-tab { flex-shrink: 0; scroll-snap-align: center; padding: 8px 13px; font-size: .8rem; }
+  #whatsapp-demo .section-head, #roteirizacao .section-head { margin-bottom: 22px; }
+  #whatsapp-demo .section-head p, #roteirizacao .section-head p { font-size: .92rem; margin-top: 10px; }
+  /* Todas as opções à vista, sem rolar pro lado: nomes curtos que cabem
+     em no máximo duas linhas. */
+  .demo-tabs { margin: 0 auto 12px; gap: 6px; }
+  .demo-tab { padding: 7px 12px; font-size: .78rem; }
   .demo-caption { font-size: .82rem; margin-bottom: 12px; }
-  .wa-demo { --wa-h: clamp(280px, calc(100vh - 360px), 440px); --wa-h: clamp(280px, calc(100svh - 360px), 440px); width: min(300px, 86vw); }
+  .wa-demo { --wa-h: clamp(260px, calc(100vh - 395px), 440px); --wa-h: clamp(260px, calc(100svh - 395px), 440px); width: min(300px, 86vw); }
 }
 
 /* Aba "Entregas" do Como funciona: sub-abas, tela do Gestor (desenhada em
@@ -427,14 +430,15 @@ footer a:hover { color: var(--orange-light); }
 .pn-sec { display: flex; justify-content: space-between; align-items: baseline; }
 .pn-sec b { font-size: .92rem; }
 .pn-sec small { font-size: .66rem; color: #9ca3af; }
-.pn-list { flex: 1; overflow: hidden; display: flex; flex-direction: column; gap: 7px; }
+.pn-list { flex: 1; min-height: 0; overflow-y: auto; scrollbar-width: none; display: flex; flex-direction: column; gap: 7px; }
 .pn-empty { text-align: center; color: #9ca3af; font-size: .7rem; margin-top: 16px; }
-.pn-card { border: 1px solid #e5e7eb; border-radius: 12px; padding: 9px 10px; animation: waIn .4s ease-out both; }
+.pn-card { flex-shrink: 0; border: 1px solid #e5e7eb; border-radius: 12px; padding: 8px 10px; animation: waIn .4s ease-out both; }
 .pn-card-top { display: flex; justify-content: space-between; font-size: .6rem; color: #9ca3af; }
 .pn-card-name { display: flex; justify-content: space-between; align-items: center; margin-top: 2px; }
 .pn-card-name b { font-size: .8rem; }
 .pn-card-name span { width: 22px; height: 22px; border-radius: 50%; background: #f0fdf4; display: grid; place-items: center; font-size: .65rem; }
 .pn-card small { display: block; font-size: .64rem; color: #6b7280; }
+.pn-card .pn-itens { color: #374151; margin-top: 2px; }
 .pn-card-pay { display: flex; justify-content: space-between; border-top: 1px solid #f1f1f1; margin-top: 6px; padding-top: 5px; font-size: .68rem; font-weight: 700; }
 .pn-card-pay em { font-style: normal; font-weight: 600; font-size: .6rem; border-radius: 999px; padding: 1px 7px; }
 .pn-card-pay .cobrar { background: #fef2f2; color: #dc2626; }

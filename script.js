@@ -67,29 +67,33 @@ document.querySelectorAll('[data-checkout]').forEach((btn) => {
   });
 });
 
+// Seções "Como funciona" e "Roteirização de entregas" da Home: cada uma
+// ([data-demo-root]) roda seus exemplos animados de forma independente,
+// com os elementos marcados por data-el dentro dela.
 // "Como funciona" da Home (seção #whatsapp-demo): cada aba roda um exemplo
 // animado no celular, em loop. Passos: mensagem do cliente ("out"), loja
 // "digitando…" e respondendo ("in", com botões), toque num botão ("tap") e
 // troca pra tela de status da entrega com o motoboy andando no mapa
 // ("track"). Só começa quando a seção aparece na tela; com "reduzir
 // movimento" ligado no sistema, mostra o resultado final parado.
-(function () {
-  const chat = document.getElementById('waChat');
+function iniciarDemo(root) {
+  const el = (nome) => root.querySelector('[data-el="' + nome + '"]');
+  const chat = el('waChat');
   if (!chat) return;
-  const corpo = document.getElementById('waBody');
-  const status = document.getElementById('waStatus');
-  const waScreen = document.getElementById('waScreen');
-  const trackScreen = document.getElementById('trackScreen');
-  const bike = document.getElementById('trackBike');
-  const caption = document.getElementById('demoCaption');
-  const tabs = document.querySelectorAll('.demo-tab');
-  const subtabs = document.querySelectorAll('.demo-subtab');
-  const linhaSub = document.getElementById('demoSubtabs');
-  const painelScreen = document.getElementById('painelScreen');
-  const pnList = document.getElementById('pnList');
-  const pnCount = document.getElementById('pnCount');
-  const aparelho = document.querySelector('.wa-demo');
-  const gestor = document.getElementById('gestorDemo');
+  const corpo = el('waBody');
+  const status = el('waStatus');
+  const waScreen = el('waScreen');
+  const trackScreen = el('trackScreen');
+  const bike = el('trackBike');
+  const caption = el('demoCaption');
+  const tabs = root.querySelectorAll('.demo-tab');
+  const subtabs = root.querySelectorAll('.demo-subtab');
+  const linhaSub = el('demoSubtabs');
+  const painelScreen = el('painelScreen');
+  const pnList = el('pnList');
+  const pnCount = el('pnCount');
+  const aparelho = root.querySelector('.wa-demo');
+  const gestor = el('gestorDemo');
 
   // Textos iguais aos padrões das mensagens automáticas do sistema
   // (lib/messageTemplates.ts e orderStatusMessages.ts no simsim-app).
@@ -172,7 +176,7 @@ document.querySelectorAll('[data-checkout]').forEach((btn) => {
       ],
     },
     'loja-painel': {
-      legenda: 'No site do motoboy, as entregas despachadas aparecem sozinhas em "Em entrega"',
+      legenda: 'Endereço, forma de pagamento e itens do pedido direto no app do entregador, sem cliente perdido nem ligação pra loja',
       tela: 'painel',
     },
   };
@@ -294,15 +298,17 @@ document.querySelectorAll('[data-checkout]').forEach((btn) => {
   // Os mesmos dois clientes nas três visões (Gestor, WhatsApp e site do
   // motoboy), pra ficar claro que é a mesma entrega passando de mão em mão.
   const CLIENTES = [
-    { num: 'B-4803', nome: 'Maria', end: 'Rua das Palmeiras, 80, Centro', valor: 'R$ 58,00', pag: 'Pix', pago: false, fim: '5 min restantes' },
-    { num: 'B-4797', nome: 'João', end: 'Rua do Sol, 12, Jardim', valor: 'R$ 71,50', pag: 'Dinheiro', pago: true, fim: '9 min restantes' },
+    { num: 'B-4803', nome: 'Maria', end: 'Rua das Palmeiras, 80, Centro', ref: 'Casa azul, portão branco', itens: '2x Cheeseburger · 1x Coca-Cola 2L', valor: 'R$ 58,00', pag: 'Pix', pago: false, fim: '5 min restantes' },
+    { num: 'B-4797', nome: 'João', end: 'Rua do Sol, 12, Jardim', ref: 'Ap 302, bloco B', itens: '1x Combo Família', valor: 'R$ 71,50', pag: 'Dinheiro', pago: true, fim: '9 min restantes' },
   ];
-  const g = (id) => document.getElementById(id);
+  const g = el;
   const gdCanvas = g('gdCanvas');
-  const prepOriginal = g('gdPrep').innerHTML;
-  const entOriginal = g('gdEnt').innerHTML;
+  // Só a seção de roteirização tem a tela do Gestor.
+  const prepOriginal = gestor ? g('gdPrep').innerHTML : '';
+  const entOriginal = gestor ? g('gdEnt').innerHTML : '';
 
   function palco(qual) {
+    if (!gestor) return;
     gestor.hidden = qual !== 'gestor';
     aparelho.hidden = qual === 'gestor';
     if (qual === 'gestor') escalarGestor();
@@ -312,7 +318,7 @@ document.querySelectorAll('[data-checkout]').forEach((btn) => {
     const largura = gestor.clientWidth - 20;
     gestor.style.setProperty('--gd-s', String(Math.min(1, largura / 720)));
   }
-  window.addEventListener('resize', () => { if (!gestor.hidden) escalarGestor(); });
+  window.addEventListener('resize', () => { if (gestor && !gestor.hidden) escalarGestor(); });
 
   function centro(el) {
     const c = gdCanvas.getBoundingClientRect();
@@ -409,7 +415,7 @@ document.querySelectorAll('[data-checkout]').forEach((btn) => {
     const el = document.createElement('div');
     el.className = 'pn-card';
     el.innerHTML = '<div class="pn-card-top"><span>' + c.num + '</span><span>agora</span></div>' +
-      '<div class="pn-card-name"><b>' + c.nome + '</b><span>💬</span></div><small>📍 ' + c.end + '</small>' +
+      '<div class="pn-card-name"><b>' + c.nome + '</b><span>💬</span></div><small>📍 ' + c.end + ' · ' + c.ref + '</small><small class="pn-itens">🧾 ' + c.itens + '</small>' +
       '<div class="pn-card-pay"><span>' + c.valor + '</span><em class="' + (c.pago ? 'pago">' + c.pag + ' · Já pago' : 'cobrar">' + c.pag + ' · A cobrar') + '</em></div>';
     return el;
   }
@@ -426,6 +432,7 @@ document.querySelectorAll('[data-checkout]').forEach((btn) => {
     pnList.innerHTML = '';
     for (let i = 0; i < CLIENTES.length; i++) {
       pnList.appendChild(cardPainel(CLIENTES[i]));
+      pnList.scrollTo({ top: pnList.scrollHeight, behavior: reduzido ? 'auto' : 'smooth' });
       pnCount.textContent = (i + 1) + (i === 0 ? ' pedido' : ' pedidos');
       await esperar(1300, id);
     }
@@ -492,7 +499,7 @@ document.querySelectorAll('[data-checkout]').forEach((btn) => {
   }
 
   const ORDEM = [...tabs].map((t) => t.dataset.demo).filter((k) => DEMOS[k]).concat([...subtabs].map((t) => t.dataset.demo));
-  const linhaAbas = document.querySelector('.demo-tabs');
+  const linhaAbas = root.querySelector('.demo-tabs');
   let atual = ORDEM[0];
   let visivel = false;
 
@@ -502,7 +509,7 @@ document.querySelectorAll('[data-checkout]').forEach((btn) => {
     if (linhaSub) linhaSub.hidden = grupo !== 'loja';
     subtabs.forEach((t) => t.classList.toggle('active', t.dataset.demo === chave));
     tabs.forEach((t) => {
-      const ativa = t.dataset.demo === grupo;
+      const ativa = t.dataset.demo === chave || t.dataset.demo === grupo;
       t.classList.toggle('active', ativa);
       t.setAttribute('aria-selected', String(ativa));
       // No celular as abas ficam numa linha que desliza: centraliza a aba
@@ -531,9 +538,9 @@ document.querySelectorAll('[data-checkout]').forEach((btn) => {
     const i = ORDEM.indexOf(atual);
     selecionar(ORDEM[(i + (dx < 0 ? 1 : -1) + ORDEM.length) % ORDEM.length]);
   };
-  [aparelho, gestor].forEach((el) => {
-    el.addEventListener('touchstart', inicioToque, { passive: true });
-    el.addEventListener('touchend', fimToque, { passive: true });
+  [aparelho, gestor].filter(Boolean).forEach((alvo) => {
+    alvo.addEventListener('touchstart', inicioToque, { passive: true });
+    alvo.addEventListener('touchend', fimToque, { passive: true });
   });
 
   const observador = new IntersectionObserver((entradas) => {
@@ -544,4 +551,5 @@ document.querySelectorAll('[data-checkout]').forEach((btn) => {
     }
   }, { threshold: 0.3 });
   observador.observe(chat);
-})();
+}
+document.querySelectorAll('[data-demo-root]').forEach(iniciarDemo);
