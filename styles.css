@@ -321,6 +321,17 @@ footer a:hover { color: var(--orange-light); }
 .track-box small { display: block; font-size: .6rem; color: #8a8f98; margin: 3px 0 8px; }
 .track-map { display: block; width: 100%; height: auto; border-radius: 8px; }
 .track-btn { display: block; text-align: center; font-size: .72rem; font-weight: 600; border: 1px solid #bbf7d0; color: #15803d; border-radius: 8px; padding: 8px; margin-top: 7px; }
+.wa-msg { white-space: pre-line; }
+.wa-sep { display: block; border-top: 1px dashed rgba(0,0,0,.18); margin: 5px 0; }
+.wa-card-map { display: block; height: 78px; margin: -3px -5px 6px; border-radius: 6px; background: linear-gradient(90deg, transparent 46%, #fff 46%, #fff 54%, transparent 54%), linear-gradient(0deg, transparent 44%, #fff 44%, #fff 56%, transparent 56%), #dfe6da; position: relative; }
+.wa-card-map::after { content: "📍"; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -70%); font-size: 1.4rem; }
+.wa-card-title { display: block; font-weight: 700; }
+.wa-card-sub { display: block; font-size: .68rem; color: #667781; }
+.wa-hours { display: grid; grid-template-columns: auto 1fr; gap: 1px 10px; margin-top: 5px; font-size: .7rem; }
+.wa-hours span:nth-child(odd) { color: #667781; }
+.wa-receipt { display: block; margin: -3px -5px 6px; padding: 8px; border-radius: 6px; background: #fff; border: 1px solid rgba(0,0,0,.08); text-align: center; }
+.wa-receipt b { display: block; color: #0a7e5e; font-size: .95rem; }
+.wa-receipt small { display: block; font-size: .62rem; color: #667781; }
 @keyframes waIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
 @keyframes waDot { 0%, 60%, 100% { opacity: .35; transform: none; } 30% { opacity: 1; transform: translateY(-3px); } }
 @media (prefers-reduced-motion: reduce) { .wa-msg, .wa-typing, .track-screen { animation: none; } }
