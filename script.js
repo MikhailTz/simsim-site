@@ -268,7 +268,7 @@ document.querySelectorAll('[data-checkout]').forEach((btn) => {
     if (caption) caption.textContent = demo.legenda;
     if (reduzido) return mostrarParado(demo);
     try {
-      for (;;) {
+      {
         mostrarChat();
         await esperar(600, id);
         for (const passo of demo.passos) {
@@ -305,21 +305,52 @@ document.querySelectorAll('[data-checkout]').forEach((btn) => {
           }
         }
         await esperar(3000, id);
+        // Terminou a história: passa sozinho pra próxima aba, assim quem só
+        // fica olhando vê todos os exemplos sem precisar tocar em nada.
+        selecionar(ORDEM[(ORDEM.indexOf(chave) + 1) % ORDEM.length]);
+        return;
       }
     } catch (e) {
       // Outra aba foi escolhida: esta execução para aqui.
     }
   }
 
-  let atual = 'atendimento';
+  const ORDEM = [...tabs].map((t) => t.dataset.demo);
+  const linhaAbas = document.querySelector('.demo-tabs');
+  let atual = ORDEM[0];
   let visivel = false;
-  tabs.forEach((tab) => {
-    tab.addEventListener('click', () => {
-      tabs.forEach((t) => { t.classList.toggle('active', t === tab); t.setAttribute('aria-selected', String(t === tab)); });
-      atual = tab.dataset.demo;
-      if (visivel) rodar(atual);
+
+  function selecionar(chave) {
+    atual = chave;
+    tabs.forEach((t) => {
+      const ativa = t.dataset.demo === chave;
+      t.classList.toggle('active', ativa);
+      t.setAttribute('aria-selected', String(ativa));
+      // No celular as abas ficam numa linha que desliza: centraliza a aba
+      // ativa só nessa linha (sem mexer na rolagem da página).
+      if (ativa && linhaAbas && linhaAbas.scrollWidth > linhaAbas.clientWidth) {
+        linhaAbas.scrollTo({ left: t.offsetLeft - (linhaAbas.clientWidth - t.offsetWidth) / 2, behavior: 'smooth' });
+      }
     });
-  });
+    if (visivel) rodar(chave);
+  }
+
+  tabs.forEach((tab) => tab.addEventListener('click', () => selecionar(tab.dataset.demo)));
+
+  // Deslizar o dedo pro lado em cima do celular troca de aba.
+  const aparelho = document.querySelector('.wa-demo');
+  let toqueX = null;
+  let toqueY = null;
+  aparelho.addEventListener('touchstart', (e) => { toqueX = e.touches[0].clientX; toqueY = e.touches[0].clientY; }, { passive: true });
+  aparelho.addEventListener('touchend', (e) => {
+    if (toqueX === null) return;
+    const dx = e.changedTouches[0].clientX - toqueX;
+    const dy = e.changedTouches[0].clientY - toqueY;
+    toqueX = null;
+    if (Math.abs(dx) < 50 || Math.abs(dx) < Math.abs(dy) * 1.5) return;
+    const i = ORDEM.indexOf(atual);
+    selecionar(ORDEM[(i + (dx < 0 ? 1 : -1) + ORDEM.length) % ORDEM.length]);
+  }, { passive: true });
 
   const observador = new IntersectionObserver((entradas) => {
     if (entradas.some((e) => e.isIntersecting)) {

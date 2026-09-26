@@ -286,8 +286,8 @@ footer a:hover { color: var(--orange-light); }
 .demo-tab { padding: 9px 16px; border-radius: 999px; border: 1.5px solid var(--line); background: var(--bg); color: var(--muted); font: inherit; font-size: .84rem; font-weight: 700; cursor: pointer; transition: .2s; }
 .demo-tab:hover { border-color: var(--orange); color: var(--orange-deep); }
 .demo-tab.active { background: var(--ink); border-color: var(--ink); color: #fff; }
-.demo-caption { text-align: center; margin-top: 18px; color: var(--muted); font-size: .92rem; font-weight: 600; }
-.wa-demo { width: 300px; margin: 0 auto; }
+.demo-caption { text-align: center; margin: 0 auto 16px; max-width: 520px; color: var(--muted); font-size: .92rem; font-weight: 600; min-height: 1.4em; }
+.wa-demo { --wa-h: 440px; width: 300px; margin: 0 auto; touch-action: pan-y; }
 .wa-demo .phone-frame { background: #efeae2; position: relative; }
 .wa-header { display: flex; align-items: center; gap: 10px; padding: 10px 12px; background: #075e54; color: #fff; }
 .wa-avatar { width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg, var(--orange-deep), var(--orange)); display: grid; place-items: center; font-size: .7rem; font-weight: 800; flex-shrink: 0; }
@@ -296,7 +296,7 @@ footer a:hover { color: var(--orange-light); }
 .wa-contact small { font-size: .68rem; opacity: .85; }
 /* A conversa sobe e guarda o histórico (rola sozinha pro fim a cada
    mensagem nova); a barra de rolagem fica escondida. */
-.wa-body { height: 440px; padding: 12px 10px; overflow-y: auto; scrollbar-width: none; font-family: Inter, system-ui, sans-serif; }
+.wa-body { height: var(--wa-h); padding: 12px 10px; overflow-y: auto; scrollbar-width: none; font-family: Inter, system-ui, sans-serif; }
 .wa-body::-webkit-scrollbar { display: none; }
 .wa-thread { min-height: 100%; display: flex; flex-direction: column; justify-content: flex-end; gap: 6px; }
 .wa-msg { max-width: 84%; padding: 7px 9px 5px; border-radius: 8px; font-size: .76rem; line-height: 1.4; color: #111b21; box-shadow: 0 1px 1px rgba(0,0,0,.08); animation: waIn .28s ease-out both; flex-shrink: 0; }
@@ -309,7 +309,7 @@ footer a:hover { color: var(--orange-light); }
 .wa-typing span { width: 6px; height: 6px; border-radius: 50%; background: #8696a0; animation: waDot 1s infinite; }
 .wa-typing span:nth-child(2) { animation-delay: .15s; }
 .wa-typing span:nth-child(3) { animation-delay: .3s; }
-.track-screen { height: 494px; background: #fff; padding: 10px 12px; font-family: Inter, system-ui, sans-serif; color: #111b21; animation: waIn .3s ease-out both; }
+.track-screen { height: calc(var(--wa-h) + 54px); background: #fff; padding: 10px 12px; font-family: Inter, system-ui, sans-serif; color: #111b21; animation: waIn .3s ease-out both; }
 .track-screen[hidden] { display: none; }
 .track-top { display: flex; justify-content: space-between; align-items: center; font-size: .72rem; margin-bottom: 10px; }
 .track-back { color: #16a34a; border: 1px solid #bbf7d0; border-radius: 999px; padding: 3px 8px; font-weight: 600; }
@@ -339,3 +339,16 @@ footer a:hover { color: var(--orange-light); }
 @keyframes waIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
 @keyframes waDot { 0%, 60%, 100% { opacity: .35; transform: none; } 30% { opacity: 1; transform: translateY(-3px); } }
 @media (prefers-reduced-motion: reduce) { .wa-msg, .wa-typing, .track-screen { animation: none; } }
+
+/* Celular: abas numa linha só (desliza pro lado) logo acima do celular, e
+   o celular encolhe pra caber inteiro na tela junto com as abas e a
+   legenda, sem precisar rolar pra trocar de exemplo. */
+@media (max-width: 640px) {
+  #whatsapp-demo .section-head { margin-bottom: 22px; }
+  #whatsapp-demo .section-head p { font-size: .92rem; margin-top: 10px; }
+  .demo-tabs { flex-wrap: nowrap; justify-content: flex-start; overflow-x: auto; scrollbar-width: none; scroll-snap-type: x proximity; margin: 0 -16px 12px; padding: 2px 16px; gap: 6px; }
+  .demo-tabs::-webkit-scrollbar { display: none; }
+  .demo-tab { flex-shrink: 0; scroll-snap-align: center; padding: 8px 13px; font-size: .8rem; }
+  .demo-caption { font-size: .82rem; margin-bottom: 12px; }
+  .wa-demo { --wa-h: clamp(280px, calc(100vh - 360px), 440px); --wa-h: clamp(280px, calc(100svh - 360px), 440px); width: min(300px, 86vw); }
+}
