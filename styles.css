@@ -620,15 +620,21 @@ footer a:hover { color: var(--orange-light); }
 /* Roteirização: palco com o Gestor e o celular do motoboy juntos. No
    computador ficam lado a lado (o ativo em destaque, o outro apagado); no
    celular ocupam o mesmo espaço e trocam com fade, sem mudar de altura. */
-.rot-stage { display: grid; grid-template-columns: minmax(0, 740px) 300px; justify-content: center; gap: 48px; align-items: center; margin: 0 auto; }
+.rot-stage { display: grid; grid-template-columns: min(740px, calc(100vw - 420px)) 300px; justify-content: center; gap: 48px; align-items: center; margin: 0 auto; }
 .rot-stage .gestor-demo { width: 100%; }
 .rot-stage .wa-demo { margin: 0; }
+.rot-stage { transition: grid-template-columns .7s ease, gap .7s ease; }
+.rot-stage > .gestor-demo { min-width: 0; overflow: hidden; }
 .rot-stage > .gestor-demo, .rot-stage > .wa-demo { transition: opacity .5s ease, transform .5s ease, filter .5s ease; }
+/* Etapa 3 (app do motoboy): o notebook some e o celular desliza pro meio. */
+.rot-stage[data-palco="painel"] { grid-template-columns: 0px 300px; gap: 0; }
+.rot-stage[data-palco="painel"] > .gestor-demo { opacity: 0; transform: scale(.9); pointer-events: none; }
 .rot-stage[data-palco="gestor"] > .wa-demo, .rot-stage[data-palco="celular"] > .gestor-demo { opacity: .38; transform: scale(.94); filter: saturate(.5); }
 @media (max-width: 900px) {
   .rot-stage { grid-template-columns: minmax(0, 1fr); gap: 0; }
   .rot-stage > .gestor-demo { min-width: 0; }
   .rot-stage > .gestor-demo, .rot-stage > .wa-demo { grid-area: 1 / 1; }
   .rot-stage .wa-demo { margin: 0 auto; }
-  .rot-stage[data-palco="gestor"] > .wa-demo, .rot-stage[data-palco="celular"] > .gestor-demo { opacity: 0; transform: scale(.96); pointer-events: none; }
+  .rot-stage[data-palco="painel"] { grid-template-columns: minmax(0, 1fr); }
+  .rot-stage[data-palco="gestor"] > .wa-demo, .rot-stage[data-palco="celular"] > .gestor-demo, .rot-stage[data-palco="painel"] > .gestor-demo { opacity: 0; transform: scale(.96); pointer-events: none; }
 }

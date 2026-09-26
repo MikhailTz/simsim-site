@@ -330,9 +330,13 @@ function iniciarDemo(root) {
   // A tela do Gestor é desenhada em 720x420 e reduzida pra largura disponível.
   function escalarGestor() {
     const largura = gestor.clientWidth - 20;
+    if (largura < 120) return;
     gestor.style.setProperty('--gd-s', String(Math.min(1, largura / 720)));
   }
   window.addEventListener('resize', () => { if (gestor) escalarGestor(); });
+  // O notebook muda de largura durante a animação (some na etapa 3 e volta
+  // na 1): recalcula a escala sempre que o tamanho dele mudar.
+  if (gestor && 'ResizeObserver' in window) new ResizeObserver(() => escalarGestor()).observe(gestor);
 
   function centro(el) {
     const c = gdCanvas.getBoundingClientRect();
@@ -457,7 +461,7 @@ function iniciarDemo(root) {
     const id = ++execucao;
     const demo = DEMOS[chave];
     if (caption) caption.textContent = demo.legenda;
-    palco(demo.tela === 'gestor' ? 'gestor' : 'celular');
+    palco(demo.tela === 'gestor' ? 'gestor' : demo.tela === 'painel' ? 'painel' : 'celular');
     if (reduzido) return mostrarParado(demo);
     try {
       if (demo.tela) {
