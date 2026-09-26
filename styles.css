@@ -167,7 +167,17 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--orange-deep); o
 .plan-card .btn { width: 100%; }
 
 @media (max-width: 900px) {
-  .device-row { grid-template-columns: 1fr; justify-items: center; gap: 40px; }
+  /* Celular: cardápio, gestor e cupom num carrossel tipo seletor de
+     personagem (o do meio em destaque, os vizinhos menores dos lados). */
+  .device-row { display: flex; align-items: center; gap: 0; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; margin: 32px -16px 0; padding: 10px 12% 4px; }
+  .device-row::-webkit-scrollbar { display: none; }
+  .device-col { flex: 0 0 72%; scroll-snap-align: center; transform: scale(.8); opacity: .45; transition: transform .35s, opacity .35s; }
+  .device-col.active { transform: none; opacity: 1; }
+  .device-col .device-laptop { width: 100%; }
+  .device-col:nth-child(2) { flex-basis: 90%; }
+  .device-row .device-phone { width: 180px; }
+  .device-row .printer-body { width: 180px; }
+  .device-row .receipt-shot { width: 160px; max-height: 320px; overflow: hidden; }
   .device-phone { width: 200px; }
   .func-grid, .func-grid.cols-3 { grid-template-columns: repeat(2, 1fr); }
   .screens-grid { grid-template-columns: repeat(2, 1fr); }
@@ -390,7 +400,7 @@ footer a:hover { color: var(--orange-light); }
 .gd-acts .r { border: 1px solid #fca5a5; color: #dc2626; }
 .gd-acts .g { background: #16a34a; color: #fff; }
 .gd-empty { color: #9ca3af; padding: 0 8px; }
-.gd-map { position: absolute; inset: 0; background: linear-gradient(90deg, transparent 49%, #fff 49%, #fff 51%, transparent 51%) 0 0 / 120px 100%, linear-gradient(0deg, transparent 48%, #fff 48%, #fff 52%, transparent 52%) 0 0 / 100% 110px, #e8ece4; animation: waIn .3s ease-out both; }
+.gd-map { position: absolute; inset: 0; background: #eef0e8; animation: waIn .3s ease-out both; }
 .gd-map[hidden] { display: none; }
 .gd-map-title { position: absolute; right: 10px; top: 10px; background: #fff; border-radius: 8px; padding: 7px 10px; box-shadow: 0 2px 8px rgba(0,0,0,.12); display: flex; flex-direction: column; }
 .gd-map-title small { color: #6b7280; font-size: 10px; }
@@ -503,3 +513,19 @@ footer a:hover { color: var(--orange-light); }
   .compare-table thead th small { font-size: .64rem; }
   .compare-table tr.group th { padding: 8px 10px; }
 }
+
+.device-nav { display: none; justify-content: center; align-items: center; gap: 6px; margin-top: 18px; }
+.device-dot { border: 1px solid rgba(255,255,255,.45); background: transparent; color: #fff; border-radius: 999px; padding: 6px 12px; font: inherit; font-size: .78rem; font-weight: 700; cursor: pointer; }
+.device-dot.active { background: #fff; color: var(--orange-deep); border-color: #fff; }
+.device-arrow { width: 32px; height: 32px; border-radius: 50%; border: none; background: rgba(0,0,0,.25); color: #fff; font-size: 1.2rem; line-height: 1; cursor: pointer; }
+@media (max-width: 900px) { .device-nav { display: flex; } }
+/* Mapa desenhado da roteirização (fica por trás dos pinos). */
+.gd-map-art { position: absolute; inset: 0; width: 100%; height: 100%; }
+@media (max-width: 640px) {
+  /* 5 abas: 3 em cima e 2 embaixo, centralizadas; 3 abas: uma linha. */
+  .demo-tabs { display: grid; grid-template-columns: repeat(6, 1fr); max-width: 420px; }
+  .demo-tab { grid-column: span 2; padding: 8px 6px; text-align: center; }
+  .demo-tabs.five .demo-tab:nth-child(4) { grid-column: 2 / span 2; }
+  .demo-tabs.five .demo-tab:nth-child(5) { grid-column: 4 / span 2; }
+}
+.marquee.paused .marquee-track { animation-play-state: paused; }

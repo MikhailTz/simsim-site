@@ -553,14 +553,19 @@ function iniciarDemo(root) {
     alvo.addEventListener('touchend', fimToque, { passive: true });
   });
 
+  // Só anima enquanto a seção está na tela: saiu, a execução para (nada
+  // fica rodando escondido e pesando a página); voltou, recomeça a aba.
   const observador = new IntersectionObserver((entradas) => {
-    if (entradas.some((e) => e.isIntersecting)) {
-      observador.disconnect();
+    const naTela = entradas.some((e) => e.isIntersecting);
+    if (naTela && !visivel) {
       visivel = true;
       rodar(atual);
+    } else if (!naTela && visivel) {
+      visivel = false;
+      execucao++;
     }
-  }, { threshold: 0.3 });
-  observador.observe(chat);
+  }, { threshold: 0.15 });
+  observador.observe(root);
 }
 document.querySelectorAll('[data-demo-root]').forEach(iniciarDemo);
 
@@ -581,4 +586,59 @@ document.querySelectorAll('[data-demo-root]').forEach(iniciarDemo);
     });
   }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
   itens.forEach((el) => obs.observe(el));
+})();
+
+// Topo da Home no celular: cardápio, gestor e cupom num carrossel. O item
+// mais perto do centro fica em destaque; setas e nomes levam direto a cada
+// um, e ele passa sozinho enquanto o topo está na tela (pausa ao tocar).
+(function () {
+  const row = document.querySelector('.device-row');
+  const nav = document.querySelector('.device-nav');
+  if (!row || !nav) return;
+  const cols = [...row.querySelectorAll('.device-col')];
+  const dots = [...nav.querySelectorAll('.device-dot')];
+  let ativo = 0;
+  let pausaAte = 0;
+  let naTela = true;
+  const carrossel = () => getComputedStyle(nav).display !== 'none';
+
+  function marcar(i) {
+    ativo = i;
+    cols.forEach((c, k) => c.classList.toggle('active', k === i));
+    dots.forEach((d, k) => d.classList.toggle('active', k === i));
+  }
+  function ir(i) {
+    const alvo = cols[(i + cols.length) % cols.length];
+    row.scrollTo({ left: alvo.offsetLeft - (row.clientWidth - alvo.offsetWidth) / 2, behavior: 'smooth' });
+  }
+  let quadro = 0;
+  row.addEventListener('scroll', () => {
+    cancelAnimationFrame(quadro);
+    quadro = requestAnimationFrame(() => {
+      const centro = row.scrollLeft + row.clientWidth / 2;
+      let perto = 0;
+      cols.forEach((c, k) => {
+        if (Math.abs(c.offsetLeft + c.offsetWidth / 2 - centro) < Math.abs(cols[perto].offsetLeft + cols[perto].offsetWidth / 2 - centro)) perto = k;
+      });
+      if (perto !== ativo) marcar(perto);
+    });
+  }, { passive: true });
+  const segurar = () => { pausaAte = Date.now() + 8000; };
+  row.addEventListener('touchstart', segurar, { passive: true });
+  dots.forEach((d) => d.addEventListener('click', () => { segurar(); ir(Number(d.dataset.i)); }));
+  nav.querySelectorAll('.device-arrow').forEach((b) => b.addEventListener('click', () => { segurar(); ir(ativo + Number(b.dataset.dir)); }));
+  new IntersectionObserver((e) => { naTela = e.some((x) => x.isIntersecting); }, { threshold: 0.3 }).observe(row);
+  marcar(0);
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    setInterval(() => {
+      if (carrossel() && naTela && !document.hidden && Date.now() > pausaAte) ir(ativo + 1);
+    }, 3500);
+  }
+})();
+
+// Faixa de destaques (Funcionalidades): só se move enquanto está na tela.
+(function () {
+  const faixa = document.querySelector('.marquee');
+  if (!faixa || !('IntersectionObserver' in window)) return;
+  new IntersectionObserver((e) => faixa.classList.toggle('paused', !e.some((x) => x.isIntersecting))).observe(faixa);
 })();
