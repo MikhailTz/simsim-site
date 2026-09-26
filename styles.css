@@ -96,7 +96,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--orange-deep); o
 
 /* Showcase: celular + desktop + cupom sobre o hero colorido, prova visual
    de "funciona em qualquer tela e imprime notinha de verdade". */
-.device-row { display: grid; grid-template-columns: .85fr 1.4fr .75fr; gap: 30px; align-items: end; margin-top: 56px; }
+.device-row { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 40px; align-items: end; margin-top: 56px; }
 .device-col { display: flex; flex-direction: column; align-items: center; }
 .device-label { display: inline-flex; margin-top: 16px; padding: 8px 16px; border-radius: 999px; background: rgba(0,0,0,.32); color: #fff; font-size: .76rem; font-weight: 700; white-space: nowrap; }
 .device-laptop { position: relative; }
