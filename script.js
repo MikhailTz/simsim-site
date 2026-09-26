@@ -66,3 +66,198 @@ document.querySelectorAll('[data-checkout]').forEach((btn) => {
     window.open(fallbackHref, '_blank', 'noopener');
   });
 });
+
+// "Como funciona" da Home (seção #whatsapp-demo): cada aba roda um exemplo
+// animado no celular, em loop. Passos: mensagem do cliente ("out"), loja
+// "digitando…" e respondendo ("in", com botões), toque num botão ("tap") e
+// troca pra tela de status da entrega com o motoboy andando no mapa
+// ("track"). Só começa quando a seção aparece na tela; com "reduzir
+// movimento" ligado no sistema, mostra o resultado final parado.
+(function () {
+  const chat = document.getElementById('waChat');
+  if (!chat) return;
+  const status = document.getElementById('waStatus');
+  const waScreen = document.getElementById('waScreen');
+  const trackScreen = document.getElementById('trackScreen');
+  const bike = document.getElementById('trackBike');
+  const caption = document.getElementById('demoCaption');
+  const tabs = document.querySelectorAll('.demo-tab');
+
+  const DEMOS = {
+    pedido: {
+      legenda: 'O cliente faz o pedido conversando normalmente no WhatsApp',
+      passos: [
+        { de: 'out', texto: 'Oi, boa noite! 😊' },
+        { de: 'in', texto: 'Olá! Seja bem-vindo à Sua Loja 👋 Quer dar uma olhada no cardápio?', botoes: ['📖 Ver cardápio'] },
+        { de: 'out', texto: 'Quero 2 cheeseburgers e uma coca' },
+        { de: 'in', texto: 'Anotado! 🍔 2x Cheeseburger e 1x Coca-Cola. Total: R$ 46,00. É pra entrega ou retirada?' },
+        { de: 'out', texto: 'Entrega' },
+        { de: 'in', texto: 'Pedido confirmado! ✅ Chega em uns 40 minutos. Pode pagar no Pix online, com taxa 0%.', botoes: ['🛵 Acompanhar pedido'] },
+      ],
+    },
+    automaticas: {
+      legenda: 'Mensagens automáticas com botões interativos',
+      passos: [
+        { de: 'out', texto: 'Cardápio' },
+        { de: 'in', texto: 'O cardápio está disponível no link a seguir. Se precisar de ajuda para escolher algo ou tiver alguma dúvida, é só chamar!', botoes: ['📖 Ver cardápio'] },
+        { de: 'in', texto: 'Olá, Maria! Recebemos seu pedido B-4676 para amanhã, 14:00 às 15:00, e logo ele será aceito pela loja. 🙏', botoes: ['📄 Ver detalhes'] },
+      ],
+    },
+    entrega: {
+      legenda: 'Botões pra acompanhar a entrega e um mapa em tempo real',
+      passos: [
+        { de: 'out', texto: 'Meu pedido já está vindo?' },
+        { de: 'in', texto: 'Seu pedido B-4598 está pronto e já vai sair pra entrega. 🎉' },
+        { de: 'in', texto: 'Seu pedido B-4598 saiu para entrega com o entregador Carlos! 🛵', botoes: ['📍 Acompanhar pedido', '📷 Seguir no Instagram'] },
+        { tap: '📍 Acompanhar pedido' },
+        { track: true },
+      ],
+    },
+    avaliacao: {
+      legenda: 'Depois da entrega, o cliente é convidado a avaliar a loja',
+      passos: [
+        { de: 'in', texto: 'Seu pedido B-4598 foi concluído. Obrigado pela preferência! 🙏' },
+        { de: 'in', texto: 'Se puder, deixa sua avaliação pra gente, ajuda muito!', botoes: ['⭐ Deixar avaliação'] },
+        { de: 'out', texto: 'Tava tudo ótimo, obrigado! 😋' },
+      ],
+    },
+  };
+
+  const reduzido = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const hora = () => new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+  let execucao = 0;
+  const esperar = (ms, id) => new Promise((resolve, reject) => setTimeout(() => (id === execucao ? resolve() : reject()), ms));
+
+  function mostrarChat() {
+    trackScreen.hidden = true;
+    waScreen.hidden = false;
+    chat.innerHTML = '';
+    if (status) status.textContent = 'online';
+  }
+
+  function balao(msg) {
+    const el = document.createElement('div');
+    el.className = 'wa-msg ' + msg.de;
+    el.appendChild(document.createTextNode(msg.texto));
+    (msg.botoes || []).forEach((texto) => {
+      const b = document.createElement('span');
+      b.className = 'wa-btn';
+      b.textContent = texto;
+      el.appendChild(b);
+    });
+    const t = document.createElement('time');
+    t.textContent = hora();
+    el.appendChild(t);
+    chat.appendChild(el);
+    // Com a conversa alinhada por baixo, o que passa do topo não entra no
+    // scrollHeight; soma as alturas e tira as mensagens mais antigas.
+    const altura = () => [...chat.children].reduce((t, c) => t + c.offsetHeight + 6, 0);
+    while (altura() > chat.clientHeight - 20 && chat.children.length > 1) chat.removeChild(chat.firstChild);
+  }
+
+  // Motoboy anda pelo trajeto tracejado do mapa até a casa do cliente.
+  const ROTA = [[30, 101], [85, 101], [85, 51], [175, 51], [175, 34]];
+  function posicaoNaRota(p) {
+    const trechos = ROTA.slice(1).map((pt, i) => Math.hypot(pt[0] - ROTA[i][0], pt[1] - ROTA[i][1]));
+    let resto = p * trechos.reduce((a, b) => a + b, 0);
+    for (let i = 0; i < trechos.length; i++) {
+      if (resto <= trechos[i]) {
+        const f = resto / trechos[i];
+        return [ROTA[i][0] + (ROTA[i + 1][0] - ROTA[i][0]) * f, ROTA[i][1] + (ROTA[i + 1][1] - ROTA[i][1]) * f];
+      }
+      resto -= trechos[i];
+    }
+    return ROTA[ROTA.length - 1];
+  }
+  function moverMoto(p) {
+    const [x, y] = posicaoNaRota(p);
+    bike.setAttribute('transform', 'translate(' + x.toFixed(1) + ' ' + y.toFixed(1) + ')');
+  }
+  function andarMoto(duracao, id) {
+    return new Promise((resolve, reject) => {
+      const inicio = performance.now();
+      (function quadro(agora) {
+        if (id !== execucao) return reject();
+        const p = Math.min((agora - inicio) / duracao, 1);
+        moverMoto(p);
+        if (p < 1) requestAnimationFrame(quadro);
+        else resolve();
+      })(inicio);
+    });
+  }
+  function mostrarStatus() {
+    waScreen.hidden = true;
+    trackScreen.hidden = false;
+    moverMoto(0);
+  }
+
+  function mostrarParado(demo) {
+    mostrarChat();
+    const temMapa = demo.passos.some((p) => p.track);
+    if (temMapa) { mostrarStatus(); moverMoto(0.6); return; }
+    demo.passos.filter((p) => p.de).forEach(balao);
+  }
+
+  async function rodar(chave) {
+    const id = ++execucao;
+    const demo = DEMOS[chave];
+    if (caption) caption.textContent = demo.legenda;
+    if (reduzido) return mostrarParado(demo);
+    try {
+      for (;;) {
+        mostrarChat();
+        await esperar(600, id);
+        for (const passo of demo.passos) {
+          if (passo.tap) {
+            await esperar(900, id);
+            const alvo = [...chat.querySelectorAll('.wa-btn')].find((b) => b.textContent === passo.tap);
+            if (alvo) alvo.classList.add('tap');
+            await esperar(1100, id);
+          } else if (passo.track) {
+            mostrarStatus();
+            await esperar(600, id);
+            await andarMoto(6000, id);
+            await esperar(1500, id);
+          } else if (passo.de === 'in') {
+            const digitando = document.createElement('div');
+            digitando.className = 'wa-typing';
+            digitando.innerHTML = '<span></span><span></span><span></span>';
+            chat.appendChild(digitando);
+            if (status) status.textContent = 'digitando…';
+            await esperar(1200, id);
+            digitando.remove();
+            if (status) status.textContent = 'online';
+            balao(passo);
+            await esperar(1500, id);
+          } else {
+            await esperar(800, id);
+            balao(passo);
+            await esperar(600, id);
+          }
+        }
+        await esperar(3000, id);
+      }
+    } catch (e) {
+      // Outra aba foi escolhida: esta execução para aqui.
+    }
+  }
+
+  let atual = 'pedido';
+  let visivel = false;
+  tabs.forEach((tab) => {
+    tab.addEventListener('click', () => {
+      tabs.forEach((t) => { t.classList.toggle('active', t === tab); t.setAttribute('aria-selected', String(t === tab)); });
+      atual = tab.dataset.demo;
+      if (visivel) rodar(atual);
+    });
+  });
+
+  const observador = new IntersectionObserver((entradas) => {
+    if (entradas.some((e) => e.isIntersecting)) {
+      observador.disconnect();
+      visivel = true;
+      rodar(atual);
+    }
+  }, { threshold: 0.3 });
+  observador.observe(chat);
+})();

@@ -108,6 +108,52 @@
       </div>
     </section>
 
+    <section class="section" id="whatsapp-demo">
+      <div class="container">
+        <div class="section-head center"><span class="eyebrow">Como funciona</span><h2>Veja o SimSim <span class="highlight">funcionando na prática.</span></h2><p>Escolha uma opção e veja o que o seu cliente recebe no WhatsApp, do primeiro oi até a entrega.</p></div>
+        <div class="demo-tabs" role="tablist" aria-label="Exemplos de funcionamento">
+          <button type="button" class="demo-tab active" role="tab" aria-selected="true" data-demo="pedido">Pedido no WhatsApp</button>
+          <button type="button" class="demo-tab" role="tab" aria-selected="false" data-demo="automaticas">Mensagens automáticas</button>
+          <button type="button" class="demo-tab" role="tab" aria-selected="false" data-demo="entrega">Acompanhar entrega</button>
+          <button type="button" class="demo-tab" role="tab" aria-selected="false" data-demo="avaliacao">Avaliação</button>
+        </div>
+        <div class="wa-demo">
+          <div class="phone-frame">
+            <div class="phone-notch"></div>
+            <div class="wa-screen" id="waScreen">
+              <div class="wa-header">
+                <span class="wa-avatar" aria-hidden="true">SL</span>
+                <span class="wa-contact"><b>Sua Loja</b><small id="waStatus">online</small></span>
+              </div>
+              <div class="wa-body" id="waChat" aria-live="polite" aria-label="Exemplo de conversa no WhatsApp entre cliente e loja"></div>
+            </div>
+            <div class="track-screen" id="trackScreen" hidden>
+              <div class="track-top"><span class="track-back">← Cardápio</span><b>Status do pedido</b><span></span></div>
+              <p class="track-num">Pedido B-4598</p>
+              <p class="track-state">Saiu para entrega</p>
+              <ol class="track-steps">
+                <li class="done"><i>✓</i>Recebido</li><li class="done"><i>✓</i>Confirmado</li><li class="done"><i>✓</i>Pronto</li><li class="done"><i>🛵</i>A caminho</li><li><i>⚑</i>Entregue</li>
+              </ol>
+              <div class="track-box">
+                <b>🛵 Seu pedido está a caminho</b>
+                <small>A posição é atualizada automaticamente durante a entrega.</small>
+                <svg class="track-map" viewBox="0 0 260 150" role="img" aria-label="Mapa com o motoboy a caminho do endereço">
+                  <rect width="260" height="150" fill="#eef0ec"/>
+                  <g fill="#dfe6da"><rect x="8" y="8" width="70" height="36" rx="3"/><rect x="92" y="8" width="76" height="36" rx="3"/><rect x="182" y="8" width="70" height="36" rx="3"/><rect x="8" y="58" width="70" height="36" rx="3"/><rect x="92" y="58" width="76" height="36" rx="3"/><rect x="182" y="58" width="70" height="36" rx="3"/><rect x="8" y="108" width="70" height="34" rx="3"/><rect x="92" y="108" width="76" height="34" rx="3"/><rect x="182" y="108" width="70" height="34" rx="3"/></g>
+                  <polyline points="30,101 85,101 85,51 175,51 175,20" fill="none" stroke="#16a34a" stroke-width="3" stroke-dasharray="5 4" opacity=".55"/>
+                  <g transform="translate(175 20)"><circle r="9" fill="#2563eb"/><path d="M-4 1 L0 -3 L4 1 L4 4 L-4 4 Z" fill="#fff"/></g>
+                  <g id="trackBike" transform="translate(30 101)"><circle r="9" fill="#16a34a" stroke="#fff" stroke-width="2"/><text y="3.5" text-anchor="middle" font-size="9">🛵</text></g>
+                </svg>
+              </div>
+              <span class="track-btn">Acompanhar meu pedido</span>
+              <span class="track-btn">Fazer outro pedido</span>
+            </div>
+          </div>
+        </div>
+        <p class="demo-caption" id="demoCaption">O cliente faz o pedido conversando normalmente no WhatsApp</p>
+      </div>
+    </section>
+
     <section class="section" id="direto-do-sistema">
       <div class="container">
         <div class="section-head center"><span class="eyebrow">Direto do sistema</span><h2>Um pouco <span class="highlight">do nosso sistema.</span></h2></div>
