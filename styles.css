@@ -228,6 +228,9 @@ footer a:hover { color: var(--orange-light); }
 .payment-card img { height: 40px; width: auto; object-fit: contain; margin: 0 auto 20px; }
 .payment-card h3 { font-weight: 700; font-size: 1.2rem; margin-bottom: 8px; }
 .payment-card p { color: var(--muted); font-size: .9rem; }
+.pay-perks { list-style: none; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; max-width: 760px; margin: 0 auto 24px; padding: 0; }
+.pay-perks li { display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border: 1px solid var(--line); border-radius: 999px; font-size: .88rem; font-weight: 600; background: var(--bg); }
+.pay-perks li::before { content: "✓"; display: grid; place-items: center; width: 18px; height: 18px; border-radius: 50%; background: #1f9d55; color: #fff; font-size: .7rem; font-weight: 700; }
 .payments-note { text-align: center; color: var(--muted); font-size: .88rem; max-width: 640px; margin-inline: auto; }
 
 /* Selo de conformidade LGPD — card único, minimalista. */
