@@ -137,12 +137,14 @@ document.querySelectorAll('[data-checkout]').forEach((btn) => {
     entrega: {
       legenda: 'Cada etapa avisada no WhatsApp, com o mapa da entrega em tempo real',
       passos: [
+        { de: 'out', texto: 'Oi! Meu pedido já tá saindo? 😊' },
         { de: 'in', texto: 'Seu pedido B-4598 está sendo preparado agora! 👨‍🍳' },
         { de: 'in', texto: 'Seu pedido B-4598 está pronto e já vai sair pra entrega. 🎉' },
         { de: 'in', texto: 'Seu pedido B-4598 saiu para entrega com o entregador Carlos! 🛵', botoes: ['📍 Acompanhar pedido', '📷 Seguir no Instagram'] },
         { tap: '📍 Acompanhar pedido' },
         { track: true },
         { voltar: true },
+        { de: 'out', texto: 'Chegou! Obrigada 😍' },
         { de: 'in', texto: 'Seu pedido B-4598 foi concluído. Obrigado pela preferência! 🙏' },
         { de: 'in', texto: 'Se puder, deixa sua avaliação pra gente, ajuda muito!', botoes: ['⭐ Deixar avaliação'] },
       ],
